@@ -1,0 +1,73 @@
+免费的Git私有代码托管服务:
+https://bitbucket.org/
+
+
+安装:
+sudo apt-get install git-core
+
+
+配置:
+git config --system    设置系统级的配置,配置文件位于 /etc/gitconfig
+git config --global    设置用户级的配置,配置文件位于 ~/.gitconfig
+git config             设置位于当前目录的项目的配置,配置文件位于 ./.git/config
+git config --list      查看已有的配置信息
+
+例:
+git config --global user.name "Peter Ho" 
+git config --global user.email "peterho1024@gmail.com"
+git config --global core.editor gvim
+git config --global merge.tool gvimdiff
+
+
+使用流程: 建立->添加文件->提交到本地仓库->推送到远程仓库
+1.1 新建Git仓库
+     在项目所在目录执行 git init
+
+1.2 从现有仓库克隆
+     git clone git://github.com/username/gitname.git
+
+2.0 添加需要跟踪的项目文件,如:
+     git add *.c
+     git add README
+     git add .
+
+3.0 提交项目到Git仓库
+     git commit  # 或者     
+     git commit -m 'initial project version'
+
+4.0 添加远程仓库
+     git remote add origin https://github.com/username/gitname.git
+     git remote add origin https://username@bitbucket.org/username/gitname.git
+
+4.1 推送项目到远程仓库
+     git push origin master
+
+
+常用命令:
+git status                            查看当前文件状态
+git diff                              查看文件具体修改的地方
+
+git rm                                移除文件 如加上 --cached 选项,则只从跟踪清单中删除,文件本身不会被删除
+git mv file_from file_to              移动文件或重命名文件
+
+git remote                            查看当前配置的远程仓库
+git remote add [shortname] [url]      添加一个新的远程仓库
+git fetch [remote-name]               从远程仓库抓取数据
+git merge [remote-name]               合并代码
+git pull [remote-name]                从远程仓库抓取数据并合并(fetch+merge)
+git push [remote-name] [branch-name]  推送数据到远程仓库,如: git push origin master
+git remote show [remote-name]         查看某个远程仓库的详细信息
+
+
+一些技巧:
+忽略文件
+     在项目目录中添加一个名为 .gitignore 的文件,加入:
+     # 这一行是注释
+     *.[oa]   # 忽略所有 .a 或 .o 结尾的文件
+     !lib.a   # 但 lib.a 除外
+     *~       # 忽略所有临时文件
+     *.pyc    # 忽略 pyc 文件
+     /TODO    # 仅仅忽略项目根目录下的 TODO 文件,不包括 subdir/TODO
+     build/   # 忽略 build/ 目录下的所有文件
+     ...
+

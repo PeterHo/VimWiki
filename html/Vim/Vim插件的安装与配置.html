@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="https://www.yinxiang.com/media/img/favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../styles/shCore.css"/>
+        <link type="text/css" rel="stylesheet" href="../styles/shThemeDefault.css"/>
+        <script type="text/javascript" src="../scripts/shCore.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPhp.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+        <title>Vim插件的安装与配置</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    
+    <body>
+        
+<p>
+<a href="../index.html">回首页</a>
+<div class="toc">
+<ul>
+<li><a href="#toc_1"> 插件管理软件vundle</a>
+<li><a href="#toc_2"> YouCompleteMe</a>
+<li><a href="#toc_3"> Clang Complete</a>
+<li><a href="#toc_4"> gocode</a>
+<li><a href="#toc_5"> PowerLine</a>
+<li><a href="#toc_6"> armasm</a>
+<li><a href="#toc_7"> VimWiki</a>
+<li><a href="#toc_8"> 配色方案</a>
+</ul>
+</div>
+</p>
+
+<h1 id="toc_1"> 插件管理软件vundle</h1>
+
+<ul>
+<li>
+git clone <a href="http://github.com/gmarik/vundle.git">http://github.com/gmarik/vundle.git</a> ~/.vim/bundle/vundle
+
+</ul>
+
+<ul>
+<li>
+:BundleInstall  "全部重新安装
+
+<li>
+:BundleInstall! "全部更新插件
+
+<li>
+:BundleClean    "清除掉rc中没有的插件
+
+</ul>
+
+
+<h1 id="toc_2"> YouCompleteMe</h1>
+
+<ul>
+<li>
+sudo apt-get install clang libclang-dev
+
+<li>
+cd ~/.vim/bundle/YouCompleteMe
+
+<li>
+./install.sh --clang-completer
+
+</ul>
+
+
+<h1 id="toc_3"> Clang Complete</h1>
+<ul>
+<li>
+sudo apt-get install clang
+
+<li>
+sudo apt-get install libclang-dev
+
+</ul>
+
+
+<h1 id="toc_4"> gocode</h1>
+
+<pre class="brush:bash">
+    go get -u github.com/nsf/gocode
+    cd $GOPATH/src/github.com/nsf/gocode/vim
+    ./update.sh
+    gocode set propose-builtins true
+</pre>
+
+<h1 id="toc_5"> PowerLine</h1>
+
+<ul>
+<li>
+到 <a href="https://github.com/Lokaltog/powerline-fonts">https://github.com/Lokaltog/powerline-fonts</a> 去下载所有的字体文件
+
+<li>
+复制到 ~/.fonts 中
+
+<li>
+执行 fc-cache -vf ~/.fonts
+<br />    就可以在 .vimrc 中设置想要的字体了
+
+</ul>
+
+
+<h1 id="toc_6"> armasm</h1>
+
+<ul>
+<li>
+syn match armasmComment          "//.*" contains=armasmTodo
+
+<li>
+syn region armasmComment     start=/\/\<strong>/ end=/\</strong>\// contains=armasmTodo
+
+<li>
+syn keyword armasmDirective     include define align text data global arm thumb
+
+</ul>
+
+
+<h1 id="toc_7"> VimWiki</h1>
+
+<ul>
+<li>
+<a href="SyntaxHighlighter.html">在Vimwiki中使用SyntaxHighlighter</a>
+
+</ul>
+
+
+<h1 id="toc_8"> 配色方案</h1>
+
+<ul>
+<li>
+把 /usr/share/vim/vim73/colors/desert.vim 复制为 ~/.vim/colors/desert_my.vim
+<br />    做以下更改
+
+</ul>
+
+<pre c>
+    let colors_name = "desert_my"
+    hi Normal guifg=#c0c0c0 guibg=#294d4a ctermfg=gray ctermbg=black                     " 绿底灰字
+    hi Normal     guifg=White guibg=grey20                                               " 灰底白字
+    ......
+    "Omni menu colors
+    hi Pmenu guibg=#444444
+    hi PmenuSel ctermfg=7 ctermbg=4 guibg=#555555 guifg=#ffffff                          " 灰底灰字,选中白字
+
+    highlight Pmenu guifg=white guibg=#445599 gui=NONE ctermfg=231 ctermbg=61 cterm=NONE
+    highlight PmenuSel guifg=#445599 guibg=gray ctermfg=61 ctermbg=250                   " 蓝底白字,选中灰底
+
+    " Matched brackets
+    hi MatchParen ctermfg=7 ctermbg=4
+
+    “ For mark plugin
+    hi MarkWord1  ctermbg=Cyan     ctermfg=Black  guibg=#8CCBEA    guifg=Black
+    hi MarkWord2  ctermbg=Green    ctermfg=Black  guibg=#A4E57E    guifg=Black
+    hi MarkWord3  ctermbg=Yellow   ctermfg=Black  guibg=#FFDB72    guifg=Black
+    hi MarkWord4  ctermbg=Red      ctermfg=Black  guibg=#FF7272    guifg=Black
+    hi MarkWord5  ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black
+    hi MarkWord6  ctermbg=Blue     ctermfg=Black  guibg=#9999FF    guifg=Black
+</pre>
+
+    </body>
+</html>
+

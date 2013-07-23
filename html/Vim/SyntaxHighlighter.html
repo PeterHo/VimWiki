@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="https://www.yinxiang.com/media/img/favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../styles/shCore.css"/>
+        <link type="text/css" rel="stylesheet" href="../styles/shThemeDefault.css"/>
+        <script type="text/javascript" src="../scripts/shCore.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPhp.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+        <title>SyntaxHighlighter</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    
+    <body>
+        
+<p>
+<a href="../index.html">回首页</a>
+</p>
+    
+<ul>
+<li>
+到 <a href="http://alexgorbatchev.com/SyntaxHighlighter/download/">http://alexgorbatchev.com/SyntaxHighlighter/download/</a> 下载最新版本
+
+<li>
+解压后复制scripts和styles这两个文件夹到放置HTML文件的目录
+
+<li>
+修改 ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl 为：
+
+</ul>
+
+<pre class="brush: php">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link type="text/css" rel="stylesheet" href="%root_path%styles/shCore.css"/&gt;
+        &lt;link type="text/css" rel="stylesheet" href="%root_path%styles/shThemeDjango.css"/&gt;
+        &lt;script type="text/javascript" src="%root_path%scripts/shCore.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="%root_path%scripts/shBrushJScript.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="%root_path%scripts/shBrushCpp.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="%root_path%scripts/shBrushBash.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="%root_path%scripts/shBrushPython.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="%root_path%scripts/shBrushPhp.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript"&gt;SyntaxHighlighter.all();&lt;/script&gt;
+
+        &lt;title&gt;%title%&lt;/title&gt;
+        &lt;meta http-equiv="Content-Type" content="text/html; charset=%encoding%"&gt;
+    &lt;/head&gt;
+    
+    &lt;body&gt;
+        %content%
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+    </body>
+</html>
+

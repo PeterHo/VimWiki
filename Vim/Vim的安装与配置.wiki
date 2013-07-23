@@ -1,0 +1,124 @@
+[[../index|回首页]]
+%toc
+
+= 编译Vim =
+    {{{class="brush:bash"
+    sudo apt-get install libncurses5-dev \
+        libgnome2-dev \
+        libgnomeui-dev \
+        libgtk2.0-dev \
+        libatk1.0-dev \
+        libbonoboui2-dev \
+        libcairo2-dev \
+        libx11-dev \
+        libxpm-dev \
+        libxt-dev \
+        python-dev \
+        ruby-dev \
+        mercurial
+    
+    sudo apt-get remove vim \
+        vim-runtime \
+        gvim \
+        vim-tiny \
+        vim-common \
+        vim-gui-common
+    
+    cd ~
+    hg clone https://code.google.com/p/vim/
+    cd vim
+    ./configure --with-features=huge \
+        --enable-rubyinterp \
+        --enable-pythoninterp \
+        --enable-perlinterp \
+        --enable-gui=gnome2 \
+        --enable-cscope \
+        --prefix=/usr \
+        --with-x \
+        --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/
+    
+    make VIMRUNTIMEDIR=/usr/share/vim/vim73
+    sudo make install
+    
+    
+    sudo gedit /usr/share/applications/gvim.desktop
+    
+    [Desktop Entry]
+    Encoding=UTF-8
+    Name=GVim
+    Comment=Edit text files
+    Icon=/home/goodhzz/vim/src/vim.ico
+    Exec=gvim %f
+    Terminal=false
+    Type=Application
+    Categories=Application;Development;
+    StartupNotify=true
+      }}}
+
+
+= 安装中文文档 =
+    * http://sourceforge.net/projects/vimcdoc/files/vimcdoc/
+    * 解压后进入 vimcdoc-<version> 目录并执行
+    ./vimcdoc.sh -i
+
+ 
+= vimrc的常用设置 =
+    * :set ic 查找时忽略大小写
+    * :set hlsearch 设置高亮度查找
+    * :set nohlsearch 取消高亮度查找
+    * :set is 查找同时就开始匹配内容
+    * :set backup 自动备份文件
+    * :set all 显示目前所有的环境参数值
+    * :set 显示与系统默认值不同的参数值
+    * :set bg=dark/light 是否显示不同的颜色色调
+
+
+= 常见问题 =
+    * 如果在启动gvim的时候出现提示:Unable to create Ubuntu Menu Proxy
+    在 ~/.bashrc 中加入
+    function gvim () { (/usr/bin/gvim -f "$@" &) }
+
+    * 如果vim提示Tlist_Refresh_Folds发生错误
+    在taglist.vim 的Tlist_Refresh_Folds()头上加入
+    "Not needed when one file is displayed
+    if g:Tlist_Show_One_File
+        return
+    endif
+
+    * 如果显不出来菜单:
+    cat ~/.gnome2/Vim
+    [Placement]
+    Dock=Toolbar\\0,0,0,0\\Menubar\\0,0,0,0
+    改成: 
+    [Placement]
+    Dock=Toolbar\\0,1,0,0\\Menubar\\0,0,0,0
+
+
+= 创建系统tags =
+
+    {{{class="brush: bash"
+    # C应用程序:
+    ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/capptags  /usr/include/*
+
+    # 网络编程
+    ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/nettags  /usr/include/netinet/* /usr/include/arpa/*
+
+    # 驱动开发
+    ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/drivertags  /usr/src/linux-headers-$(uname -r)/include/linux/*
+
+    # 嵌入式开发
+    ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/linux2.6.29tags  $HOME/src/linux-2.6.29/include/linux/*
+    ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/linux2.6.38tags  $HOME/src/linux-2.6.38/include/linux/*
+    ctags -I __THROW -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q  -f ~/.vim/linux3.0.30tags  $HOME/src/linux-3.0.30/include/linux/*
+    }}}
+
+
+= 需要安装的工具 =
+
+{{{class="brush: bash"
+sudo apt-get install exuberant-ctags
+sudo apt-get install cscope
+sudo apt-get install wmctrl
+sudo apt-get install git
+}}}
+
