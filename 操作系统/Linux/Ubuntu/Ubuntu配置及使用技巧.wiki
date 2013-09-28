@@ -1,0 +1,253 @@
+[[../../../index|回首页]]
+%toc
+
+----
+= 分区 =
+
+    {{{c
+    ext3  /     5G
+    ext3  /usr  15G
+    ext3  /var  4G
+    swap  2*ram
+    ext3  /boot 256M
+    ext4  /tmp  2G
+    ext3  /opt  10G
+    ext4  /home
+      }}}
+
+----
+= Ubuntu配置流程 =
+
+    * 更改更新源
+    * 安装软件更新和语言包
+    * 安装设置Ubuntu One,下载setup.sh
+    * 设置gedit为保存时不备份
+    * 执行setup.sh
+    * 重启,sunpinyin喜欢出问题,多装几次又对了
+    * 运行 fcitx-configtool 配置输入法 下载词库
+    * 更改桌面背景,主题
+    * 运行 gnome-tweak-tool 设置字体,9号字
+    * 设置firefox同步,安装撤销插件Undo Closed Tabs Button,adblock plus,blocksite plus,设置后台打开标签,设置搜索引擎
+    * 设置交换ESC和CapsLock
+
+----
+= 系统设置 =
+== 笔记本设置双显卡 ==
+
+    {{{c
+    sudo cat /sys/kernel/debug/vgaswitcheroo/switch
+    显示
+    0:IGD:+:Pwr:0000:00:02.0
+    1:DIS: :Pwr:0000:01:00.0
+    表示两块显卡都开着的
+    建立一个脚本/usr/local/sbin/vgaswitcher
+      }}}
+
+    {{{class="brush: bash"
+    #!/bin/bash
+     
+    if [ "$(whoami)" != "root" ]; then
+       echo "Use as root"
+       exit 1
+    fi
+     
+    if [ -z "$1" ]; then
+            cmd="OFF"
+    else
+       if [ "$1" = "-i" ]; then
+          cmd="DIGD"
+       elif [ "$1" = "-d" ]; then
+          cmd="DDIS"
+       else
+               cmd=$1
+       fi
+    fi
+     
+    if ([ "$cmd" != "OFF" ] && [ "$cmd" != "DDIS" ] && [ "$cmd" != "DIGD" ]); then
+            echo "Bad Command!"
+            exit 1
+    fi
+         
+    echo "$cmd" > /sys/kernel/debug/vgaswitcheroo/switch
+    cat /sys/kernel/debug/vgaswitcheroo/switch
+      }}}
+
+    再建立一个启动脚本/etc/init.d/vgaswitch
+    {{{class="brush: bash"
+    #!/bin/bash
+     
+    if [ "$1" != "start" ]; then
+       exit;
+    fi
+     
+    /usr/local/sbin/vgaswitcher
+    /usr/local/sbin/vgaswitcher -i
+      }}}
+    {{{c
+    然后执行命令
+    sudo chmod +x /usr/local/sbin/vgaswitcher /etc/init.d/vgaswitch && sudo update-rc.d vgaswitch defaults
+    重启再执行一次最开始的命令
+    0:IGD:+:Pwr:0000:00:02.0
+    1:DIS: :Off:0000:01:00.0
+    发现独立显卡已经关闭了
+      }}}
+
+
+== 高级设置 ==
+
+    * sudo apt-get install gnome-tweak-tool
+
+
+----
+= 软件设置 =
+
+== nautilus ==
+
+    * 添加Backspace快捷键
+        add
+        (gtk_accel_path "<Actions>/ShellActions/Up" "BackSpace")
+        under
+        ~/.config/nautilus/accels
+        And then restart nautilus by
+        nautilus -q or killall nautilus
+        
+
+== GolenDict ==
+
+    * 下载词典
+        * http://abloz.com/huzheng/stardict-dic/
+        * https://www.dropbox.com/sh/bf1v7wthsl7pmbi/qt3D1kvFmv
+        * http://forum.ubuntu.org.cn/viewtopic.php?t=400742&p=2954178
+
+
+== fcitx ==
+
+    * 安装fcitx以及fcitx-sunpinyin
+        {{{class="brush: bash"
+        sudo apt-get remove ibus
+        sudo apt-get remove ibus-pinyin
+        sudo apt-get remove ibus-sunpinyin
+        sudo add-apt-repository ppa:fcitx-team/nightly
+        sudo apt-get update
+        sudo apt-get install fcitx
+        sudo apt-get install fcitx-sunpinyin
+          }}}
+    * 下载词库:
+        * http://code.google.com/p/hslinuxextra/downloads/list
+    * 配置:
+        * fcitx-configtool
+
+
+== 小小输入法 ==
+
+    === 安装 ===
+        
+        * http://yongim.ys168.com/
+        * 下载最新的测试版本解压到 ~/.yong/
+        * cd ~/.yong/
+        * sudo ./yong-tool.sh --install64
+        * ./yong-tool.sh --select
+        * 用 http://pan.baidu.com/share/link?shareid=519727&uk=3154739508 里的 wbx.txt 替换掉之前的
+
+    === 配置 ===
+
+        * cd ~/.yong/
+        * ./yong-config
+
+        * .vimrc
+        * autocmd InsertLeave * set imdisable
+        * autocmd InsertEnter * set noimdisable
+        
+    === 技巧 ===
+        
+        * 临时切换拼音：先按Z字母，接着可输入拼音单字或词组，同时会提示五笔编码
+        * ;'（即L字母键右边的两个符号键）分别为选二重和选三重功能
+        * Ctrl+.        中/英文标点
+        * Shift+Space   全/半角字符 
+
+    === 卸载 ===
+    
+        * cd ~/.yong/
+        * sudo ./yong-tool.sh --uninstall64
+
+
+== Firefox ==
+
+    * 后台打开标签
+        * 地址栏输入:about:config
+        * 把browser.tabs.loadDivertedInBackground中的值改成：True ,默认是False是前台打开,双击可以修改!
+    * i-urgjs-6xcsh-j2i39-ryksh-pxfry
+    * ~/.mozilla/firefox/c7ocj117.default/searchplugins/
+
+
+
+
+== 安装gnome ==
+
+    * sudo apt-get install gnome-session-fallback
+
+
+== KeePassX ==
+
+    * 密码管理软件
+    * sudo apt-get install keepassx
+
+
+== VirtualBox识别USB设备 ==
+
+    * 到www.virtualbox.org/wiki/Downloads去下载对应版本的Oracle VM VirtualBox Extension Pack
+    * sudo gedit /etc/group
+    找到 vboxusers:x:126: 改成 vboxusers:x:126:goodhzz
+
+
+== golang ==
+
+    {{{class="brush: bash"
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:gophers/go
+    sudo apt-get update
+    sudo apt-get install golang-stable git-core mercurial
+  }}}
+
+
+----
+= 技巧 =
+
+    * 各种快捷方式在 [[/usr/share/applications/]] 下面
+
+    * 安装32位支持
+        * 如果发现莫名其妙的运行不了某些可执行程序,应该是因为64位系统不能执行32位程序
+        sudo apt-get install ia32-libs
+
+    * 如果安装或卸载软件失败,试试
+        * sudo apt-get -f install
+
+    * 在 [[file:///~/.xprofile]] 里添加命令可自动启动
+
+    * Ubuntu 进入命令行模式:Ctrl+Alt+T
+
+    * 如果窗口的最大化最小化恢复按钮都不见了,执行命令
+    metacity --replace
+
+    * 打开一个有root权限的文件管理器:
+    sudo nautilus
+
+    * 显示隐藏文件
+    Ctrl+H
+
+    * 查询内核版本
+    uname -a
+
+    * rar压缩文件文件名乱码
+    http://www.rarlab.com/download.htm
+    sudo make install
+
+    * Ubuntu one安装在 "/usr/share/app-install/desktop/Ubuntu One"
+
+    * 按ALT拖动图标，可以在快速启动栏上添加快捷方式
+
+    * gedit打开文件乱码:
+        * 执行命令:
+        gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'UTF-16']"
+        gsettings set org.gnome.gedit.preferences.encodings shown-in-menu "['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'UTF-16']"
+

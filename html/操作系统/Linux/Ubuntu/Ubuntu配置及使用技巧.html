@@ -1,0 +1,506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="https://www.yinxiang.com/media/img/favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../../../styles/shCore.css"/>
+        <link type="text/css" rel="stylesheet" href="../../../styles/shThemeDefault.css"/>
+        <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushPhp.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+        <title>Ubuntu配置及使用技巧</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    
+    <body>
+        
+<p>
+<a href="../../../index.html">回首页</a>
+<div class="toc">
+<ul>
+<li><a href="#toc_1"> 分区</a>
+<li><a href="#toc_2"> Ubuntu配置流程</a>
+<li><a href="#toc_3"> 系统设置</a>
+<ul>
+<li><a href="#toc_3.1">1 笔记本设置双显卡</a>
+<li><a href="#toc_3.2">2 高级设置</a>
+</ul>
+<li><a href="#toc_4"> 软件设置</a>
+<ul>
+<li><a href="#toc_4.1">1 nautilus</a>
+<li><a href="#toc_4.2">2 GolenDict</a>
+<li><a href="#toc_4.3">3 fcitx</a>
+<li><a href="#toc_4.4">4 小小输入法</a>
+<ul>
+<li><a href="#toc_4.4.1">4.1 安装</a>
+<li><a href="#toc_4.4.2">4.2 配置</a>
+<li><a href="#toc_4.4.3">4.3 技巧</a>
+<li><a href="#toc_4.4.4">4.4 卸载</a>
+</ul>
+<li><a href="#toc_4.5">5 Firefox</a>
+<li><a href="#toc_4.6">6 安装gnome</a>
+<li><a href="#toc_4.7">7 KeePassX</a>
+<li><a href="#toc_4.8">8 VirtualBox识别USB设备</a>
+<li><a href="#toc_4.9">9 golang</a>
+</ul>
+<li><a href="#toc_5"> 技巧</a>
+</ul>
+</div>
+</p>
+
+<hr />
+<h1 id="toc_1"> 分区</h1>
+
+<pre c>
+    ext3  /     5G
+    ext3  /usr  15G
+    ext3  /var  4G
+    swap  2*ram
+    ext3  /boot 256M
+    ext4  /tmp  2G
+    ext3  /opt  10G
+    ext4  /home
+</pre>
+
+<hr />
+<h1 id="toc_2"> Ubuntu配置流程</h1>
+
+<ul>
+<li>
+更改更新源
+
+<li>
+安装软件更新和语言包
+
+<li>
+安装设置Ubuntu One,下载setup.sh
+
+<li>
+设置gedit为保存时不备份
+
+<li>
+执行setup.sh
+
+<li>
+重启,sunpinyin喜欢出问题,多装几次又对了
+
+<li>
+运行 fcitx-configtool 配置输入法 下载词库
+
+<li>
+更改桌面背景,主题
+
+<li>
+运行 gnome-tweak-tool 设置字体,9号字
+
+<li>
+设置firefox同步,安装撤销插件Undo Closed Tabs Button,adblock plus,blocksite plus,设置后台打开标签,设置搜索引擎
+
+<li>
+设置交换ESC和CapsLock
+
+</ul>
+
+<hr />
+<h1 id="toc_3"> 系统设置</h1>
+<h2 id="toc_3.1">1 笔记本设置双显卡</h2>
+
+<pre c>
+    sudo cat /sys/kernel/debug/vgaswitcheroo/switch
+    显示
+    0:IGD:+:Pwr:0000:00:02.0
+    1:DIS: :Pwr:0000:01:00.0
+    表示两块显卡都开着的
+    建立一个脚本/usr/local/sbin/vgaswitcher
+</pre>
+
+<pre class="brush: bash">
+    #!/bin/bash
+     
+    if [ "$(whoami)" != "root" ]; then
+       echo "Use as root"
+       exit 1
+    fi
+     
+    if [ -z "$1" ]; then
+            cmd="OFF"
+    else
+       if [ "$1" = "-i" ]; then
+          cmd="DIGD"
+       elif [ "$1" = "-d" ]; then
+          cmd="DDIS"
+       else
+               cmd=$1
+       fi
+    fi
+     
+    if ([ "$cmd" != "OFF" ] &amp;&amp; [ "$cmd" != "DDIS" ] &amp;&amp; [ "$cmd" != "DIGD" ]); then
+            echo "Bad Command!"
+            exit 1
+    fi
+         
+    echo "$cmd" &gt; /sys/kernel/debug/vgaswitcheroo/switch
+    cat /sys/kernel/debug/vgaswitcheroo/switch
+</pre>
+<blockquote>
+再建立一个启动脚本/etc/init.d/vgaswitch
+</blockquote>
+<pre class="brush: bash">
+    #!/bin/bash
+     
+    if [ "$1" != "start" ]; then
+       exit;
+    fi
+     
+    /usr/local/sbin/vgaswitcher
+    /usr/local/sbin/vgaswitcher -i
+</pre>
+<pre c>
+    然后执行命令
+    sudo chmod +x /usr/local/sbin/vgaswitcher /etc/init.d/vgaswitch &amp;&amp; sudo update-rc.d vgaswitch defaults
+    重启再执行一次最开始的命令
+    0:IGD:+:Pwr:0000:00:02.0
+    1:DIS: :Off:0000:01:00.0
+    发现独立显卡已经关闭了
+</pre>
+
+
+<h2 id="toc_3.2">2 高级设置</h2>
+
+<ul>
+<li>
+sudo apt-get install gnome-tweak-tool
+
+</ul>
+
+
+<hr />
+<h1 id="toc_4"> 软件设置</h1>
+
+<h2 id="toc_4.1">1 nautilus</h2>
+
+<ul>
+<li>
+添加Backspace快捷键
+<br />        add
+<br />        (gtk_accel_path "&lt;Actions&gt;/ShellActions/Up" "BackSpace")
+<br />        under
+<br />        ~/.config/nautilus/accels
+<br />        And then restart nautilus by
+<br />        nautilus -q or killall nautilus
+
+</ul>
+        
+
+<h2 id="toc_4.2">2 GolenDict</h2>
+
+<ul>
+<li>
+下载词典
+
+<ul>
+<li>
+<a href="http://abloz.com/huzheng/stardict-dic/">http://abloz.com/huzheng/stardict-dic/</a>
+
+<li>
+<a href="https://www.dropbox.com/sh/bf1v7wthsl7pmbi/qt3D1kvFmv">https://www.dropbox.com/sh/bf1v7wthsl7pmbi/qt3D1kvFmv</a>
+
+<li>
+<a href="http://forum.ubuntu.org.cn/viewtopic.php?t=400742&amp;p=2954178">http://forum.ubuntu.org.cn/viewtopic.php?t=400742&amp;p=2954178</a>
+
+</ul>
+</ul>
+
+
+<h2 id="toc_4.3">3 fcitx</h2>
+
+<ul>
+<li>
+安装fcitx以及fcitx-sunpinyin
+<pre class="brush: bash">
+        sudo apt-get remove ibus
+        sudo apt-get remove ibus-pinyin
+        sudo apt-get remove ibus-sunpinyin
+        sudo add-apt-repository ppa:fcitx-team/nightly
+        sudo apt-get update
+        sudo apt-get install fcitx
+        sudo apt-get install fcitx-sunpinyin
+</pre>
+
+<li>
+下载词库:
+
+<ul>
+<li>
+<a href="http://code.google.com/p/hslinuxextra/downloads/list">http://code.google.com/p/hslinuxextra/downloads/list</a>
+
+</ul>
+<li>
+配置:
+
+<ul>
+<li>
+fcitx-configtool
+
+</ul>
+</ul>
+
+
+<h2 id="toc_4.4">4 小小输入法</h2>
+
+<h3 id="toc_4.4.1" class="justcenter">4.1 安装</h3>
+        
+<ul>
+<li>
+<a href="http://yongim.ys168.com/">http://yongim.ys168.com/</a>
+
+<li>
+下载最新的测试版本解压到 ~/.yong/
+
+<li>
+cd ~/.yong/
+
+<li>
+sudo ./yong-tool.sh --install64
+
+<li>
+./yong-tool.sh --select
+
+<li>
+用 <a href="http://pan.baidu.com/share/link?shareid=519727&amp;uk=3154739508">http://pan.baidu.com/share/link?shareid=519727&amp;uk=3154739508</a> 里的 wbx.txt 替换掉之前的
+
+</ul>
+
+<h3 id="toc_4.4.2" class="justcenter">4.2 配置</h3>
+
+<ul>
+<li>
+cd ~/.yong/
+
+<li>
+./yong-config
+
+</ul>
+
+<ul>
+<li>
+.vimrc
+
+<li>
+autocmd InsertLeave * set imdisable
+
+<li>
+autocmd InsertEnter * set noimdisable
+
+</ul>
+        
+<h3 id="toc_4.4.3" class="justcenter">4.3 技巧</h3>
+        
+<ul>
+<li>
+临时切换拼音：先按Z字母，接着可输入拼音单字或词组，同时会提示五笔编码
+
+<li>
+;'（即L字母键右边的两个符号键）分别为选二重和选三重功能
+
+<li>
+Ctrl+.        中/英文标点
+
+<li>
+Shift+Space   全/半角字符 
+
+</ul>
+
+<h3 id="toc_4.4.4" class="justcenter">4.4 卸载</h3>
+    
+<ul>
+<li>
+cd ~/.yong/
+
+<li>
+sudo ./yong-tool.sh --uninstall64
+
+</ul>
+
+
+<h2 id="toc_4.5">5 Firefox</h2>
+
+<ul>
+<li>
+后台打开标签
+
+<ul>
+<li>
+地址栏输入:about:config
+
+<li>
+把browser.tabs.loadDivertedInBackground中的值改成：True ,默认是False是前台打开,双击可以修改!
+
+</ul>
+<li>
+i-urgjs-6xcsh-j2i39-ryksh-pxfry
+
+<li>
+~/.mozilla/firefox/c7ocj117.default/searchplugins/
+
+</ul>
+
+
+
+
+<h2 id="toc_4.6">6 安装gnome</h2>
+
+<ul>
+<li>
+sudo apt-get install gnome-session-fallback
+
+</ul>
+
+
+<h2 id="toc_4.7">7 KeePassX</h2>
+
+<ul>
+<li>
+密码管理软件
+
+<li>
+sudo apt-get install keepassx
+
+</ul>
+
+
+<h2 id="toc_4.8">8 VirtualBox识别USB设备</h2>
+
+<ul>
+<li>
+到www.virtualbox.org/wiki/Downloads去下载对应版本的Oracle VM VirtualBox Extension Pack
+
+<li>
+sudo gedit /etc/group
+<br />    找到 vboxusers:x:126: 改成 vboxusers:x:126:goodhzz
+
+</ul>
+
+
+<h2 id="toc_4.9">9 golang</h2>
+
+<pre class="brush: bash">
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:gophers/go
+    sudo apt-get update
+    sudo apt-get install golang-stable git-core mercurial
+</pre>
+
+
+<hr />
+<h1 id="toc_5"> 技巧</h1>
+
+<ul>
+<li>
+各种快捷方式在 <a href="/usr/share/applications/">/usr/share/applications/</a> 下面
+
+</ul>
+
+<ul>
+<li>
+安装32位支持
+
+<ul>
+<li>
+如果发现莫名其妙的运行不了某些可执行程序,应该是因为64位系统不能执行32位程序
+<br />        sudo apt-get install ia32-libs
+
+</ul>
+</ul>
+
+<ul>
+<li>
+如果安装或卸载软件失败,试试
+
+<ul>
+<li>
+sudo apt-get -f install
+
+</ul>
+</ul>
+
+<ul>
+<li>
+在 <a href="file:///home/goodhzz/.xprofile">file:///~/.xprofile</a> 里添加命令可自动启动
+
+</ul>
+
+<ul>
+<li>
+Ubuntu 进入命令行模式:Ctrl+Alt+T
+
+</ul>
+
+<ul>
+<li>
+如果窗口的最大化最小化恢复按钮都不见了,执行命令
+<br />    metacity --replace
+
+</ul>
+
+<ul>
+<li>
+打开一个有root权限的文件管理器:
+<br />    sudo nautilus
+
+</ul>
+
+<ul>
+<li>
+显示隐藏文件
+<br />    Ctrl+H
+
+</ul>
+
+<ul>
+<li>
+查询内核版本
+<br />    uname -a
+
+</ul>
+
+<ul>
+<li>
+rar压缩文件文件名乱码
+<br />    <a href="http://www.rarlab.com/download.htm">http://www.rarlab.com/download.htm</a>
+<br />    sudo make install
+
+</ul>
+
+<ul>
+<li>
+Ubuntu one安装在 "/usr/share/app-install/desktop/Ubuntu One"
+
+</ul>
+
+<ul>
+<li>
+按ALT拖动图标，可以在快速启动栏上添加快捷方式
+
+</ul>
+
+<ul>
+<li>
+gedit打开文件乱码:
+
+<ul>
+<li>
+执行命令:
+<br />        gsettings set org.gnome.gedit.preferences.encodings auto-detected "['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'UTF-16']"
+<br />        gsettings set org.gnome.gedit.preferences.encodings shown-in-menu "['UTF-8', 'GB18030', 'GB2312', 'GBK', 'BIG5', 'CURRENT', 'UTF-16']"
+
+</ul>
+</ul>
+
+    </body>
+</html>
+

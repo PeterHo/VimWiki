@@ -1,0 +1,68 @@
+[[../index|回首页]]
+
+    * 一些技巧
+{{{class="brush: c"
+#include <math.h>
+const double pi = 4.0 * atan(1.0);
+
+double m;
+//一个浮点数在计算时可能回发生误差
+//比如1可能会变成0.9999...
+//需要用floor(m+0.5)来修正这个问题
+if(floor(m+0.5) == m)
+    printf("m是整数\n");
+  }}}
+  
+    * C++输入输出
+{{{class="brush: cpp"
+#include <iostream>
+int a, b;
+char line[1000];
+while(cin>>a>>b) cout<<a+b<<endl;  
+while(cin.getline(line, sizeof(line), '\n')){/*...*/}
+
+#include <fstream>
+ifstream fin("file.in");
+ofstream fout("file.out");
+while(fin>>a>>b) fout<<a+b<<endl;  
+  }}}
+  
+    * 字符串和整形相互转换
+{{{class="brush: cpp"
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+int n;
+string str;
+stringstream convert;
+
+n = 100;
+convert<<n;
+str = convert.str(); // set str = "100"
+
+str = "100";
+convert<<str;
+stream>>n; // set n = 100;
+  }}}
+
+    * 排列组合
+{{{class="brush: cpp"
+#include <algorithm>
+
+using namespace std;
+
+int p[10];
+next_permutation(p, p+10);
+  }}}
+
+    * 常用判断
+{{{class="brush: cpp"
+#include <ctype.h>
+
+isalpha();
+isdigit();
+islower();
+isupper();
+  }}}

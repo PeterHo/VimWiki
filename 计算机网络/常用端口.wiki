@@ -1,0 +1,3 @@
+HTTP    80
+FTP     21
+telnet  23

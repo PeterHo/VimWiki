@@ -1,0 +1,397 @@
+[[../../index|回首页]]
+%toc
+
+= 自定义命令 =
+
+    {{{c
+    <leader>sw  交换前后两个单词(很先进的交换)
+
+    F8          取消匹配高亮
+    F10         make
+
+    <M-u>       更新Tags和Cscope
+    :M          make
+    :MI         make install
+    :CM         cmake .
+    :EM         e ./CMakeLists.txt
+    :R          run
+    :D          dbg
+    :CCH        创建C文件和H文件
+    :CH         创建当前C文件对应的H文件
+  }}}
+
+= 插件命令 =
+
+== 界面类 ==
+
+=== TagHighlight ===
+
+    {{{c
+    :UpdateTypesFile      开启高亮,如果没tag文件还会自己生成一个
+    :UpdateTypesFileOnly  开启高亮,不会自己生成tag文件,这个函数绑在F12上面
+  }}}
+
+== 工程管理 ==
+
+=== vimprj ===
+
+    * 在工程目录下建立一个名为 .vimprj 的目录或文件
+    当打开此目录下的文件时,vimprj会自动将此目录设置为当前的工作目录(不用在NerdTree里面使用cd命令了)
+    上面那条特性会产生一点问题,已经关闭了,还是要用cd命令来确定工作目录
+
+    {{{c
+    :VimprjInfo   查看当前的工作目录
+  }}}
+
+== 文件管理 ==
+
+=== NERDTree ===
+
+    {{{c
+    最常用:
+    
+    :Bookmark
+    o
+    go
+    C
+    m
+    cd
+
+    :NERDTreeFromBookmark    通过书签打开Nerdtree
+
+    
+    书签命令:
+    
+    :Bookmark                添加书签
+    :BookmarkToRoot          设置NerdTree的根目录为指定书签
+    :ClearBookmarks          清除指定书签
+    :ClearAllBookmarks       清除所有书签
+
+     
+    映射:
+    
+    o                        打开文件,并跳到文件窗口
+    go                       打开文件,但不跳到文件窗口
+    i                        split 打开文件,并跳到文件窗口
+    gi                       split 打开文件,但不跳到文件窗口
+    s                        vsp 打开文件,并跳到文件窗口
+    gs                       vsp 打开文件,但不跳到文件窗口
+    O                        递归打开选中结点下的所有目录
+    x                        合拢选中结点的父目录
+    X                        递归合拢选中结点下的所有目录
+              
+    D                        删除当前书签
+               
+    P                        跳到根结点
+    p                        跳到父结点
+    K                        跳到当前目录下同级的第一个结点
+    J                        跳到当前目录下同级的最后一个结点
+              
+    C                        将选中目录或选中文件的父目录设为根结点
+    u                        将当前根结点的父目录设为根目录，并变成合拢原根结点
+    U                        将当前根结点的父目录设为根目录，但保持展开原根结点
+    r                        递归刷新选中目录
+    R                        递归刷新根结点
+    m                        显示文件系统菜单
+    cd                       将Vim当前工作目录设为选中目录
+              
+    I                        切换是否显示隐藏文件
+    f                        切换是否使用文件过滤器
+    F                        切换是否显示文件
+    B                        切换是否显示书签
+  }}}
+
+=== bufkill ===
+
+    {{{c
+    :BD                      关闭文件,但是窗口还保持住
+    <leader>bd               关闭文件,但是窗口还保持住
+  }}}
+
+=== CtrlP ===
+
+    {{{c
+    <C-P>                    开始搜索文件
+    <C-W><C-U> / <C-W>u      在历史记录里搜索文件
+    <C-J> / <C-K>            在搜索列表中移动光标
+  }}}
+
+=== Mini Buffer Explorer ===
+
+    {{{c
+    <leader>h                向左切换窗口
+    <leader>l                向右切换窗口
+    :b<n>                    切换到第n号窗口
+  }}}
+
+== 快速编辑 ==
+
+=== NERDCommenter ===
+
+    {{{c
+    [count]<leader>cc        注释
+    [count]<leader>cm        最简注释(比如/*...*/,不会每行都有一个,而是一块语句就只有一对)
+    [count]<leader>cs        用 "sexy" 风格注释所选的行
+    [count]<leader>cy        和 cc 一样,但注释前先复制所选的行
+    [count]<leader>cl        注释时左对齐
+    [count]<leader>cb        注释时两边对齐
+    <leader>cA               在行末添加注释符并进入插入模式
+
+    [count]<leader>c<space>  反转注释状态(根据第一行)
+    [count]<leader>ci        反转注释状态(每行单独处理)
+
+    [count]<leader>cu        取消所选行的注释.
+
+    <leader>ca               切换注释风格(如在/**/与//之间切换)
+  }}}
+
+
+=== Ultisnips ===
+
+    {{{c
+    配置文件位于 ~/.vim/bundle/ultisnips/UltiSnips/
+    <C-J>                    弹出snippets
+    <C-tab>                  弹出候选的snippets
+    <C-J>                    在snippets中跳到下一个编辑点
+    <C-K>                    在snippets中跳到上一个编辑点
+    :UltiSnipsEdit           修改当前文件对应的模板文件
+  }}}
+
+=== YouCompleteMe ===
+
+    {{{c
+    :YcmDiags                显示clang编译的警告和错误
+    <leader>jd               go to definition
+
+      }}}
+
+=== Clang Complete ===
+
+    {{{c
+    <C-X><C-U>               激活补全,新增加了一个快捷键 <C-U>
+    <C-]>                    跳到声明处
+    <C-T>                    跳回来
+                            
+    :copen                   显示分析错误
+  }}}
+
+    * 可以在根目录下面添加一个 .clang_complete 文件,记录头文件等信息,如:
+    -DDEBUG
+    -include ../config.h
+    -I../common
+    -I/usr/include/c++/4.5.3/
+    -I/usr/include/c++/4.5.3/x86_64-slackware-linux/
+
+    * 对于gtk+-2.0:
+    -I/usr/include/gtk-2.0
+    -I/usr/lib/i386-linux-gnu/gtk-2.0/include
+    -I/usr/include/atk-1.0
+    -I/usr/include/cairo
+    -I/usr/include/gdk-pixbuf-2.0
+    -I/usr/include/pango-1.0
+    -I/usr/include/gio-unix-2.0/
+    -I/usr/include/glib-2.0
+    -I/usr/lib/i386-linux-gnu/glib-2.0/include
+    -I/usr/include/pixman-1
+    -I/usr/include/freetype2
+    -I/usr/include/libpng12 
+
+    * 附其他补全方式:
+    {{{c
+    整行补全                    CTRL-X CTRL-L
+    当前文件关键字补全            CTRL-X CTRL-N
+    字典补全                    CTRL-X CTRL-K
+    同义词字典补全               CTRL-X CTRL-T
+    头文件内关键字补全            CTRL-X CTRL-I
+    标签补全                    CTRL-X CTRL-]
+    补全文件名                  CTRL-X CTRL-F
+    补全宏定义                  CTRL-X CTRL-D
+    补全Vim命令                 CTRL-X CTRL-V
+    用户自定义补全               CTRL-X CTRL-U
+    拼写建议                    CTRL-X CTRL-S 
+  }}}
+
+
+=== CmdlineComplete ===
+
+    {{{c
+    <C-P>  在使用/来搜索时,自动补全
+  }}}
+
+
+=== EasyMotion ===
+
+    {{{c
+    <leader><leader>fx    从光标位置处向后查找所有'x'
+    <leader><leader>Fx    从光标位置处向前查找所有'x'
+  }}}
+    * 另外还支持 t T  w W b B e E ge gE j k n N
+    现在把<leader><leader> 换成了m
+
+
+== 编程辅助 ==
+
+=== a.vim ===
+
+    {{{c
+    :A    切换c/h
+    :AS   在 split 中打开c和h
+    :AV   在 vsp 中打开c和h
+     
+    :IH   switches to file under cursor
+    :IHS  splits and switches
+    :IHV  vertical splits and switches
+      }}}
+
+=== Tagbar ===
+
+    {{{c
+    p         源文件跳到tags处,但光标仍停留在Tagbar窗口
+    <space>   在命令行显示当前tag的原型
+      }}}
+
+
+=== Tabular ===
+
+    {{{c
+    :Tab/=    将代码按=作为标准对齐
+    :Tab/:    将代码按:作为标准对齐
+    :Tab/:\zs 按:作为标准对齐,但是:本身不动
+      }}}
+
+=== Cscope ===
+
+    * 比较常用的 g c
+    {{{c
+    s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
+    g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
+    d: 查找本函数调用的函数
+    c: 查找调用本函数的函数
+    t: 查找指定的字符串
+    e: 查找egrep模式，相当于egrep功能，但查找速度快多了
+    f: 查找并打开文件，类似vim的find功能
+    i: 查找包含本文件的文件
+      }}}
+
+    * 可以用快捷键查找当前光标处的单词,如:
+    {{{c
+    nmap <C-C>c
+    nmap <C-C><C-C>
+    nmap <C-C>s
+    nmap <C-C><C-S>
+      }}}
+
+    * 也可以用命令来查找,如:
+    {{{c
+    :cs find c do_cscope 在项目中查找调用do_cscope()函数的函数
+    :cs find s do_cscope 在项目中查找do_cscope符号出现的地方
+      }}}
+
+=== Tag ===
+
+    {{{c
+    Ctrl+]        跳转到当前光标下的标签
+    Ctrl+T        跳转到标签栈中较早的标签
+      }}}
+
+=== EasyGrep ===
+
+    * 搜索模式:
+    {{{c
+        All                                    所有文件
+        Buffers                                打开的文件
+        TrackExt                               智能判断文件类型
+        User                                   用户自定义的正则表达式
+      }}}
+
+    * 快捷键:
+    {{{c
+        <leader>vv / <leader>vV                查找光标处的单词 / 全词匹配
+        <leader>va / <leader>vA                like vv, but add to existing list / 全词匹配
+        <leader>vr / <leader>vR                替换光标处的单词 / 全词匹配
+
+        <leader>vo                             显示查找选项,这个功能很方便,注意要通过 q 来关闭
+        <leader>vy<option>                     快捷更改选项,option是选项的第一个字母
+      }}}
+
+    * 命令:
+    {{{c
+        :Grep / :Grep! [arg]                   <leader>vv / <leader>vV
+        :GrepAdd / :GrepAdd! [arg]             <leader>va / <leader>vA
+        :Replace [target] [replacement]        替换
+        :ReplaceUndo [target] [replacement]    恢复上一次替换(不一定靠谱)
+      }}}
+
+=== Vim Bookmark ===
+
+    {{{c
+    mm 用于设定或者删除一个书签，或者使用命令 VbookmarkToggle
+    mn 用于跳转到下一个书签，或者使用命令 VbookmarkNext
+    mp 用于跳转到前一个书签，或者使用命令 VbookmarkPrevious
+    ma 用于删除所有书签，或者使用命令 VbookmarkClearAll
+      }}}
+
+=== Visual-Mark ===
+
+    {{{c
+    <C-F2>        设置/取消书签
+    <F2> / <M-F2> 切换书签
+      }}}
+
+
+== Python编程环境 ==
+
+=== Pydiction ===
+
+    {{{c
+    开启补全          <C-X><C-K>
+    默认是Tab键,但是不好用,直接用字典补全
+      }}}
+
+=== PyFlakes ===
+
+    {{{c
+    :cc               检查错误
+      }}}
+
+
+=== pythoncomplete ===
+
+    {{{c
+    开启补全          <C-X><X-O>
+      }}}
+
+
+=== Python Mode ===
+
+    * Rope补全好像有问题,先不用了
+
+    {{{c
+    K                 Show python docs for current word under cursor
+    <leader>r         Run current buffer
+    <leader>b         Set breakpoints
+
+    [[                Jump to previous class or function (normal, visual, operator modes)
+    ]]                Jump to next class or function  (normal, visual, operator modes)
+    [M                Jump to previous class or method (normal, visual, operator modes)
+    ]M                Jump to next class or method (normal, visual, operator modes)
+    aC                Select a class. Ex: vaC, daC, yaC, caC (normal, operator modes)
+    iC                Select inner class. Ex: viC, diC, yiC, ciC (normal, operator modes)
+    aM                Select a function or method. Ex: vaM, daM, yaM, caM (normal, operator modes)
+    iM                Select inner function or method. Ex: viM, diM, yiM, ciM (normal, operator modes)
+     
+    :Pydoc <args>     Show python documentation
+    :PyLintToggle     Enable, disable pylint
+    :PyLint           Check current buffer
+    :PyLintAuto       Automatically fix PEP8 errors in the current buffer
+    :Pyrun            Run current buffer
+      }}}
+
+
+== 其他 ==
+
+=== Vimwiki ===
+
+    * [[Vimwiki使用]]
+
+

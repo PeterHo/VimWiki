@@ -1,0 +1,85 @@
+[[../../index|回首页]]
+%toc
+
+[[http://www.viemu.com/|官网]]
+[[http://www.viemu.com/viemu_doc.html|文档]]
+
+
+== 选项 ==
+{{{c
+    显示选项窗口: Tools->Options->ViEmu
+
+    Enable ViEmu                                              启用ViEmu(勾选)
+    Ignore CAPS LOCK state in NORMAL                          在 Normal 模式下忽略 CAPS LOCK 键的状态(勾选)
+    Default to Windows clipboard                              与 Windows 共享剪贴板(勾选)
+    Beep on errors                                            出错时蜂鸣
+    Insert a Visual Studio mark when a ViEmu mark is set      与 VS 共享书签(勾选)
+    Prevent VS2005+ warning "cannot edit while running"       防止 VS2005+ 警告(勾选)
+    Use Visual Studio selection for Visual mode               使用 VS 的选中方式(勾选)
+    Windows-like word wrap navigation                         使用 Windows 方式的光标移动模式
+    Warn before long operation on read-only file              操作只读文件之前警告(勾选)
+    ignorecase                                                搜索等情况时忽略大小写(勾选)
+    smartcase                                                 当设置 ignorecase 时,如搜索内容中有大写字母则搜索时大小写敏感(勾选)
+    incsearch                                                 增量搜索(勾选)
+    hlsearch                                                  高亮搜索结果(勾选)
+    Keyboard...                                               设置键盘映射
+  }}}
+
+== 键盘 ==
+
+{{{c
+    ViEmu 使用了一个单独的名为 ViEmu 的键盘映射方案
+    左边的列表列出了被忽略的 VS 的快捷键
+    右边的列表列出了与 ViEmu 冲突的快捷键
+    下面的编辑框里是 ViEmu 要用的快捷键
+    比如想用 Ctrl+F 来执行搜索操作,就把 F 从这个框里面删掉,然后点 Apply
+    要想在插入模式时 Ctrl+S 保存文件并进入到普通模式,需要重映射 Ctrl+S ,因此在编辑框里加上 S
+    Ctrl+V 变成了 Ctrl+Q
+    Ctrl+Shift+Alt+V 启用/禁用ViEmu
+  }}}
+
+== 配置 ==
+
+    * 配置文件 .viemurc 或者 _viemurc
+    * 路径:
+    * HOMEDRIVE/HOMEPATH
+    * HOME
+    * ViEmu 安装目录(C:\Program Files\ViEmu)
+
+{{{class="brush:bash"
+    "/////////////////////////////////////////////////////////////////////////////
+    " Key Mappings
+    "/////////////////////////////////////////////////////////////////////////////
+
+    " map Ctrl-Tab to switch window
+    nnoremap <S-Up> <C-W><Up>
+    nnoremap <S-Down> <C-W><Down>
+    nnoremap <S-Left> <C-W><Left>
+    nnoremap <S-Right> <C-W><Right>
+
+    nnoremap <M-k> <C-W><Up>
+    nnoremap <M-j> <C-W><Down>
+    nnoremap <M-h> <C-W><Left>
+    nnoremap <M-l> <C-W><Right>
+
+    " Enhance '<' '>' , do not need to reselect the block after shift it.
+    vnoremap < <gv
+    vnoremap > >gv
+
+    " map Up & Down to gj & gk, helpful for wrap text edit
+    noremap <Up> gk
+    noremap <Down> gj
+
+    "save file
+    :nmap <C-S> <ESC>:w<cr>
+    :imap <C-S> <ESC>:w<cr>
+
+    :inoremap <M-h> <Left>
+    :inoremap <M-j> <Down>
+    :inoremap <M-k> <Up>
+    :inoremap <M-l> <Right>
+
+    nnoremap <c-Enter> o<Esc>k
+    nnoremap <s-Enter> O<Esc>j
+
+  }}}

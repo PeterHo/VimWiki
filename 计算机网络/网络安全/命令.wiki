@@ -1,0 +1,44 @@
+= Windows =
+
+    == 注册表操作 ==
+        * [[http://lcx.cc/?i=847 |Cmd、Dos 修改系统注册表指定项的值]]
+        * [[http://lcx.cc/?i=846 |Cmd、Dos 删除注册表指定项的子键值]]
+
+    == 网络命令 ==
+        * [[http://lcx.cc/?i=803 |Dos、Cmd 命令 Tracert 跟踪路由]]
+        * [[http://lcx.cc/?i=835 |使用Cmd,Dos 连接超过3人的3389命令]]
+        * [[http://lcx.cc/?i=842 |使用Cmd,Dos局域网中根据IP查主机名]]
+        * [[http://lcx.cc/?i=801 |Dos,Cmd命令来恢复远程终端3389连接]]
+
+    == 系统操作 ==
+        * [[http://lcx.cc/?i=837 |使用 Cmd、Dos 杀死、终止普通的进程]]
+        * [[http://lcx.cc/?i=840 |使用 Cmd、Dos 注销当前操作系统用户]]
+        * [[http://lcx.cc/?i=839 |使用 Cmd、Dos 清理入侵后的系统日志]]
+        * [[http://lcx.cc/?i=834 |使用Cmd,Dos 命令修改指定文件的属性]]
+        * [[http://lcx.cc/?i=836 |使用Cmd,Dos 查看当前操作系统的配置]]
+
+        * [[http://lcx.cc/?i=442 |扫描内网指定用户能获取管理权限的机器]]
+        * [[http://lcx.cc/?i=816 |批处理、Bat强行杀死指定名字,PID进程]]
+        * [[http://lcx.cc/?i=820 |在批处理、Bat中镶嵌VBS脚本代码执行]]
+        * [[http://lcx.cc/?i=824 |批处理、Bat，显示指定类型的系统服务]]
+        * [[http://lcx.cc/?i=830 |使用批处理、Bat占用局域网所有IP地址]]
+        * [[http://lcx.cc/?i=806 |批处理、Bat 也能进行 DDOS 攻击？]]
+        * [[http://lcx.cc/?i=813 |批处理、Bat 也能显示漂亮的进度条]]
+        * [[http://lcx.cc/?i=814 |批处理、Bat 截取文本中指定的字符]]
+        * [[http://lcx.cc/?i=817 |Bat 获取、读取自身所在磁盘的盘符]]
+        * [[http://lcx.cc/?i=818 |批处理、Bat 产生指定范围随机数字]]
+        * [[http://lcx.cc/?i=821 |使用批处理、Bat 比较指定文件大小]]
+        * [[http://lcx.cc/?i=822 |批处理、Bat 中的环境变量参数详解]]
+        * [[http://lcx.cc/?i=825 |使用批处理,Bat添加系统自启动服务]]
+        * [[http://lcx.cc/?i=826 |使用批处理、Bat 获取当前文件路径]]
+        * [[http://lcx.cc/?i=831 |批处理、Bat 中特殊符号的实际作用]]
+        * [[http://lcx.cc/?i=819 |批处理、Bat每隔多少行执行什么]]
+        * [[http://lcx.cc/?i=797 |简单批处理、Bat 内部命令简介]]
+        * [[http://lcx.cc/?i=805 |批处理、Bat 延时60秒执行命令]]
+        * [[http://lcx.cc/?i=809 |使用批处理、Bat替换txt文本中的字符]]
+        * [[http://lcx.cc/?i=810 |使用批处理、Bat删除txt文本中的字符]]
+        * [[http://lcx.cc/?i=811 |使用批处理、Bat 查找指定名字的进程]]
+        * [[http://lcx.cc/?i=812 |批处理,Bat中获取用户输入的指定内容]]
+        * [[http://lcx.cc/?i=815 |批处理、Bat 全盘搜索指定名字的文件]]
+
+= Linux =
