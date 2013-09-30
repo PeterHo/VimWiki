@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="https://www.yinxiang.com/media/img/favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../../../styles/shCore.css"/>
+        <link type="text/css" rel="stylesheet" href="../../../styles/shThemeDefault.css"/>
+        <script type="text/javascript" src="../../../scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="../../../scripts/shBrushPhp.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+        <title>FireFox翻墙设置</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    
+    <body>
+        
+<p>
+<a href="../../../index.html">回首页</a>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">注册App Engine账户</a>
+<li><a href="#toc_2">安装依赖软件</a>
+<ul>
+<li><a href="#toc_2.1">Python</a>
+<li><a href="#toc_2.2">GreenLet</a>
+<li><a href="#toc_2.3">Gevent</a>
+<li><a href="#toc_2.4">OpenSSL</a>
+<li><a href="#toc_2.5">GTK托盘</a>
+</ul>
+<li><a href="#toc_3">安装goagent</a>
+<ul>
+<li><a href="#toc_3.1">下载</a>
+<li><a href="#toc_3.2">安装</a>
+</ul>
+<li><a href="#toc_4">配置Firefox</a>
+<ul>
+<li><a href="#toc_4.1">安装插件</a>
+<li><a href="#toc_4.2">导入证书</a>
+</ul>
+<li><a href="#toc_5">配置FoxyProxy</a>
+<ul>
+<li><a href="#toc_5.1">设置代理服务器</a>
+<li><a href="#toc_5.2">添加代理规则订阅</a>
+</ul>
+<li><a href="#toc_6">运行GoAgent</a>
+</ul>
+</div>
+</p>
+
+<h1 id="toc_1">注册App Engine账户</h1>
+
+<ul>
+<li>
+<a href="https://developers.google.com/appengine/?hl=zh-CN">https://developers.google.com/appengine/?hl=zh-CN</a>
+
+</ul>
+
+<h1 id="toc_2">安装依赖软件</h1>
+    
+<h2 id="toc_2.1" class="justcenter">Python</h2>
+<pre class="brush:bash">
+    sudo apt-get install python python-dev curl
+</pre>
+
+<h2 id="toc_2.2" class="justcenter">GreenLet</h2>
+<pre class="brush:bash">
+    cd ~/src
+    git clone https://github.com/python-greenlet/greenlet.git
+    cd greenlet
+    sudo python setup.py install
+</pre>
+
+<h2 id="toc_2.3" class="justcenter">Gevent</h2>
+<pre class="brush:bash">
+    cd ~/src
+    git clone https://github.com/surfly/gevent.git
+    cd gevent
+    sudo python setup.py install
+</pre>
+    
+<h2 id="toc_2.4" class="justcenter">OpenSSL</h2>
+<pre class="brush:bash">
+    wget http://www.openssl.org/source/openssl-1.0.1c.tar.gz
+    tar zxvf openssl-1.0.1c.tar.gz
+    cd openssl-1.0.1c
+    ./config --prefix=/home/goodhzz/openssl
+    make &amp;&amp; sudo make install
+    sudo apt-get install python-openssl
+</pre>
+    
+<h2 id="toc_2.5" class="justcenter">GTK托盘</h2>
+<pre class="brush:bash">
+    sudo apt-get install python-appindicator python-vte
+</pre>
+      
+<h1 id="toc_3">安装goagent</h1>
+    
+<h2 id="toc_3.1" class="justcenter">下载</h2>
+<ul>
+<li>
+<a href="https://code.google.com/p/goagent/">下载地址</a>
+
+</ul>
+    
+<h2 id="toc_3.2" class="justcenter">安装</h2>
+<pre class="brush:bash">
+        cd goagent
+        cd server
+        python uploader.zip  # 填入之前申请的APPID,Email,Password
+        cd ..
+        cd local
+        gedit proxy.ini      # 在appid处填入APPID
+                             # 将 [listen] visible 设置成0
+</pre>
+      
+<h1 id="toc_4">配置Firefox</h1>
+    
+<h2 id="toc_4.1" class="justcenter">安装插件</h2>
+<ul>
+<li>
+下载安装foxyproxy插件并重启浏览器
+
+</ul>
+    
+<h2 id="toc_4.2" class="justcenter">导入证书</h2>
+<ul>
+<li>
+编辑-&gt;首选项-&gt;高级-&gt;证书-&gt;查看证书-&gt;证书机构-&gt;导入
+
+<li>
+选择local文件夹下面的CA.crt-&gt;所有复选框打勾-&gt;确定
+
+</ul>
+
+<h1 id="toc_5">配置FoxyProxy</h1>
+    
+<h2 id="toc_5.1" class="justcenter">设置代理服务器</h2>
+<ul>
+<li>
+右键狐狸图标-&gt;选项-&gt;代理服务器-&gt;新建代理服务器-&gt;代理服务器细节-&gt;手动配置代理服务器
+
+<li>
+主机或IP地址填 127.0.0.1 端口填 8087 
+
+</ul>
+    
+<h2 id="toc_5.2" class="justcenter">添加代理规则订阅</h2>
+<ul>
+<li>
+右键狐狸图标-&gt;选项-&gt;选择工作模式:为全部 URLs 启用代理服务器 "127.0.0.1:8087"
+
+<li>
+订阅模式-&gt;转到-&gt;订阅名称: gfwlist 订阅网址: <a href="http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt">http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt</a>
+
+<li>
+添加代理服务器-&gt;选择 127.0.0.1:8087
+
+<li>
+Format选 AutoProxy Obfuscation选 Base64
+
+<li>
+等把goagent运行起来了以后再点确定
+
+</ul>
+
+<h1 id="toc_6">运行GoAgent</h1>
+    
+<pre class="brush:bash">
+    cd local
+    python addto-startup.py
+    
+    " 如果不需要在桌面上建立快捷方式,将函数 drop_desktop 屏蔽掉即可
+    python goagent-gtk.py
+</pre>
+
+    </body>
+</html>
+

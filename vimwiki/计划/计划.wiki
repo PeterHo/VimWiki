@@ -1,0 +1,110 @@
+[[../index|回首页]]
+%toc
+
+= 收集箱 =
+
+vim和gvim的配置要分开
+vim 记录恢复session,view,viminfo
+vim-orgmode
+VimOrganizer
+
+快速切换文件
+shell in vim
+matchit
+autoclose
+vim-space
+trailing-whitespace
+jsbeautify
+markdown
+markdown-syntax
+instant-markdown.vim
+
+voom
+txtbrowser
+ywtxt
+pangloss/vim-javascript
+
+sketch.vim
+indent-guides
+calendar.vim
+
+if(!g:iswindows)
+    let g:org_agenda_select_dirs=["~/Notes/VimOrganizer/org_files"]
+    let g:agenda_files = split(glob("~/Notes/VimOrganizer/org_files/org-mod*.org"),"\n")
+    au! BufRead,BufWrite,BufWritePost,BufNewFile *.org
+    au BufEnter *.org call org#SetOrgFileType()
+endif
+
+
+= 正在做 =
+
+    == 工作 ==
+
+        * TH
+
+    == 学习 ==
+
+        * 
+
+    == 爱好 ==
+        
+        * 魔方
+        * 五笔
+    
+= 以后做 =
+        
+    == 工作 ==
+        
+        * SQLMap前端
+    
+    == 学习 ==
+        
+        * 正则表达式
+        * [ ] Linux命令
+            * [ ] sed
+            * [ ] awk
+            * [ ] find
+            * [ ] grep
+        * [ ] 复习Vim
+            - [ ] ultisnips的设置,使之主要用自己的配置文件,我只需定义一小部分自己的东西
+            - [ ] tags的设置,cscope的使用
+            - [ ] 复习主要插件的快捷键
+            - [ ] vim的快捷键
+            - [ ] 进一步学习vim的剪贴板的使用
+            - [ ] pyton-mode
+            - [ ] gist
+        * [ ] gdb
+            - [ ] gdb调试c程序
+            - [ ] python的调试
+            - [ ] golang的调试
+    
+    == 爱好 ==
+    
+        * 
+    
+= 也许做 =
+        
+    == 工作 ==
+    
+        * 
+    
+    == 学习 ==
+        
+        * 学习Java
+
+    == 爱好 ==
+            
+        * 吉他
+        * 鼓
+        * 摄影
+        * 声乐
+        
+
+
+= 垃圾箱 =
+
+
+
+
+    
+

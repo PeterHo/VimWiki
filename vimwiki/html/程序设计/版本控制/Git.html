@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="https://www.yinxiang.com/media/img/favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../../styles/shCore.css"/>
+        <link type="text/css" rel="stylesheet" href="../../styles/shThemeDefault.css"/>
+        <script type="text/javascript" src="../../scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../../scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="../../scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="../../scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="../../scripts/shBrushPhp.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+        <title>Git</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    
+    <body>
+        
+<p>
+<a href="../../index.html">回首页</a>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">安装</a>
+<li><a href="#toc_2">配置</a>
+<li><a href="#toc_3">常用命令</a>
+<ul>
+<li><a href="#toc_3.1">建立</a>
+<ul>
+<li><a href="#toc_3.1.1">新建Git仓库</a>
+<li><a href="#toc_3.1.2">从现有仓库克隆</a>
+</ul>
+<li><a href="#toc_3.2">添加</a>
+<li><a href="#toc_3.3">移动</a>
+<li><a href="#toc_3.4">删除</a>
+<li><a href="#toc_3.5">查看</a>
+<ul>
+<li><a href="#toc_3.5.1">历史</a>
+<li><a href="#toc_3.5.2">状态</a>
+<li><a href="#toc_3.5.3">差异</a>
+</ul>
+<li><a href="#toc_3.6">撤销</a>
+<li><a href="#toc_3.7">提交</a>
+<li><a href="#toc_3.8">标签</a>
+<ul>
+<li><a href="#toc_3.8.1">列显</a>
+<li><a href="#toc_3.8.2">创建</a>
+<li><a href="#toc_3.8.3">查看</a>
+<li><a href="#toc_3.8.4">推送</a>
+</ul>
+<li><a href="#toc_3.9">分支</a>
+<ul>
+<li><a href="#toc_3.9.1">新建</a>
+<li><a href="#toc_3.9.2">查看</a>
+<li><a href="#toc_3.9.3">切换</a>
+<li><a href="#toc_3.9.4">合并</a>
+<li><a href="#toc_3.9.5">删除</a>
+</ul>
+<li><a href="#toc_3.10">远程</a>
+<ul>
+<li><a href="#toc_3.10.1">添加</a>
+<li><a href="#toc_3.10.2">查看</a>
+<li><a href="#toc_3.10.3">推送</a>
+<li><a href="#toc_3.10.4">抓取</a>
+<li><a href="#toc_3.10.5">移除/重命名</a>
+</ul>
+</ul>
+<li><a href="#toc_4">一些技巧</a>
+<ul>
+<li><a href="#toc_4.1">图形化工具</a>
+<li><a href="#toc_4.2">Git仓库</a>
+<li><a href="#toc_4.3">忽略文件</a>
+</ul>
+</ul>
+</div>
+</p>
+
+<h1 id="toc_1">安装</h1>
+<ul>
+<li>
+Linux
+<pre class="brush:bash">
+    sudo apt-get install git-core
+</pre>
+
+<li>
+Windows
+
+<ul>
+<li>
+<a href="http://msysgit.github.com/">下载并安装</a>
+
+</ul>
+</ul>
+
+
+<h1 id="toc_2">配置</h1>
+<pre class="brush:bash">
+    git config --system    # 设置系统级的配置,配置文件位于 /etc/gitconfig
+    git config --global    # 设置用户级的配置,配置文件位于 ~/.gitconfig
+    git config             # 设置位于当前目录的项目的配置,配置文件位于 ./.git/config
+    git config --list      # 查看已有的配置信息
+
+    # 例:
+    git config --global user.name "Peter Ho"
+    git config --global user.email "peterho1024@gmail.com"
+    git config --global core.editor gvim
+    git config --global merge.tool gvimdiff
+
+    # 命令别名
+    git config --global alias.co checkout
+    git config --global alias.br branch
+    git config --global alias.ci commit
+    git config --global alias.st status
+    git config --global alias.unstage 'reset HEAD --'
+    git config --global alias.last 'log -1 HEAD'
+</pre>
+
+<h1 id="toc_3">常用命令</h1>
+<h2 id="toc_3.1" class="justcenter">建立</h2>
+<h3 id="toc_3.1.1" class="justcenter">新建Git仓库</h3>
+<pre class="brush:bash">
+            git init
+</pre>
+
+<h3 id="toc_3.1.2" class="justcenter">从现有仓库克隆</h3>
+<pre class="brush:bash">
+            git clone git://github.com/username/gitname.git
+            git clone git://github.com/username/gitname.git mygitname
+</pre>
+    
+<h2 id="toc_3.2" class="justcenter">添加</h2>
+<pre class="brush:bash">
+            # 告诉Git对未跟踪的文件进行跟踪,对已跟踪文件进行暂存
+            # 还能用于合并时把有冲突的文件标记为已解决状态
+            git add *.c                     # 添加一类文件
+            git add README                  # 添加一个文件
+            git add .                       # 添加所有文件
+            git add lib/                    # 添加一个文件夹里的文件
+</pre>
+    
+<h2 id="toc_3.3" class="justcenter">移动</h2>
+<pre class="brush:bash">
+            git mv file_from file_to        # 移动文件或重命名文件
+</pre>
+    
+<h2 id="toc_3.4" class="justcenter">删除</h2>
+<pre class="brush:bash">
+            git rm filename                 # 从Git中移除某个文件,并连带从工作目录中删除此文件,即该文件不再纳入版本管理
+            git rm -f filename              # 如果该文件修改过并且已经放在暂存区,需用强制删除选项
+            git rm --cached filename        # 只从Git中移除文件而不在工作目录中删除文件
+            git rm log/\*.log               # 移除log文件夹下面的*.log文件, * 前加 \ 是防止shell帮忙展开
+            git rm \*~                      # 递归删除当前目录及其子目录中所有 ~ 结尾的文件
+            git rm *~                       # 只删除当前目录中所有 ~ 结尾的文件,而不会递归,因为 * 是被shell来展开的
+</pre>
+    
+<h2 id="toc_3.5" class="justcenter">查看</h2>
+<h3 id="toc_3.5.1" class="justcenter">历史</h3>
+<pre class="brush:bash">
+            git log                         # 查看提交历史
+            git log -p -2                   # 展开每次提交的内容差异,并仅显示最近的两次更新
+            git log --stat                  # 仅显示简要的增改行数统计
+                                            # 其他常用参数
+                -p                          # 按补丁格式显示每个更新之间的差异。
+                --stat                      # 显示每次更新的文件修改统计信息。
+                --shortstat                 # 只显示 --stat 中最后的行数修改添加移除统计。
+                --name-only                 # 仅在提交信息后显示已修改的文件清单。
+                --name-status               # 显示新增、修改、删除的文件清单。
+                --abbrev-commit             # 仅显示 SHA-1 的前几个字符,而非所有的 40 个字符。
+                --relative-date             # 使用较短的相对时间显示（比如,“2 weeks ago”）。
+                --graph                     # 显示 ASCII 图形表示的分支合并历史。
+                --pretty                    # 使用其他格式显示历史提交信息
+                                            # 可用的选项包括 oneline,short,full,fuller 和 format(后跟指定格式)
+            
+                -(n)                        # 仅显示最近的 n 条提交
+                --since, --after            # 仅显示指定时间之后的提交。
+                --until, --before           # 仅显示指定时间之前的提交。
+                --author                    # 仅显示指定作者相关的提交。
+                --committer                 # 仅显示指定提交者相关的提交。
+</pre>
+            
+<h3 id="toc_3.5.2" class="justcenter">状态</h3>
+<pre class="brush:bash">
+            git status                      # 查看当前文件状态
+</pre>
+            
+<h3 id="toc_3.5.3" class="justcenter">差异</h3>
+<pre class="brush:bash">
+            git diff                        # 比较当前文件和暂存区域快照之间的差异
+            git diff --chached              # 比较暂存区域快照和提交区域快照之间的差异
+</pre>
+    
+<h2 id="toc_3.6" class="justcenter">撤销</h2>
+<pre class="brush:bash">
+            git commit --amend              # 重新提交一次,会覆盖上一次的提交
+            git reset HEAD filename         # 取消暂存的文件
+            git checkout -- filename        # 恢复文件到修改前的版本
+</pre>
+    
+<h2 id="toc_3.7" class="justcenter">提交</h2>
+<pre class="brush:bash">
+            git commit                      # 这种方式会启动文本编辑器以便输入本次提交的说明
+            git commit -m 'init'            # 直接在参数中填入提交的说明
+            git commit -a -m 'init'         # 把所有已经跟踪过的文件暂存起来一并提交,从而跳过 git add 的步骤
+</pre>
+    
+<h2 id="toc_3.8" class="justcenter">标签</h2>
+<h3 id="toc_3.8.1" class="justcenter">列显</h3>
+<pre class="brush:bash">
+            git tag                         # 列出已有标签
+            git tag -l 'v1.4.2.*'           # 列出符合条件的标签
+</pre>
+<h3 id="toc_3.8.2" class="justcenter">创建</h3>
+<pre class="brush:bash">
+            git tag v1.4-lw                 # 创建一个名为 'v1.4-lw' 的轻量级标签
+            git tag -a v1.4 -m 'my 1.4'     # 创建一个名为 'v1.4' ,说明是 'my 1.4' 的标签
+            git tag -a v1.2 9fceb02         # 为以前的提交打标签
+                                            # 9fceb02 是提交对象的校验和(的前几位)
+                                            # 可通过 git log 命令获得,如 git log --pretty=oneline
+</pre>
+<h3 id="toc_3.8.3" class="justcenter">查看</h3>
+<pre class="brush:bash">
+            git show v1.4                   # 查看相应标签的版本信息
+</pre>
+<h3 id="toc_3.8.4" class="justcenter">推送</h3>
+<pre class="brush:bash">
+            git push origin v1.5            # 将标签 v1.5 推送到远端服务器
+            git push origin --tags          # 将所有新增标签推送到远端服务器
+</pre>
+    
+<h2 id="toc_3.9" class="justcenter">分支</h2>
+<h3 id="toc_3.9.1" class="justcenter">新建</h3>
+<pre class="brush:bash">
+            git branch testing              # 新建一个名为 testing 的分支,注意新建分支以后需手动切换过去
+</pre>
+<h3 id="toc_3.9.2" class="justcenter">查看</h3>
+<pre class="brush:bash">
+            git branch                      # 列出所有分支,当前分支名字前面有个 '*'
+            git branch -v                   # 查看各个分支最后一个提交对象的信息
+            git branch --merged             # 查看哪些分支已被并入当前分支(这些分支都可以删了)
+            git branch --no-merged          # 查看哪些分支还没有被并入当前分支(这种分支在被删除时会提示错误)
+</pre>
+<h3 id="toc_3.9.3" class="justcenter">切换</h3>
+<pre class="brush:bash">
+            git checkout testing            # 切换到 testing 分支
+            git checkout -b testing         # 创建分支 testing 并切换到 testing 分支
+</pre>
+<h3 id="toc_3.9.4" class="justcenter">合并</h3>
+<pre class="brush:bash">
+            git merge testing               # 将分支 testing 与当前分支进行合并
+                                            # 如果在合并时出现冲突,需要人工解决,可通过 git status 来查看冲突的是哪些文件
+</pre>
+<h3 id="toc_3.9.5" class="justcenter">删除</h3>
+<pre class="brush:bash">
+            git branch -d testing           # 删除分支 testing
+            git branch -D testing           # 强制删除还没有被并入当前分支的分支 testing,注意这样做会丢失数据
+</pre>
+
+<h2 id="toc_3.10" class="justcenter">远程</h2>
+<h3 id="toc_3.10.1" class="justcenter">添加</h3>
+<pre class="brush:bash">
+            # 在 github.com 或 bitbucket.org 上添加一个简写名为 origin 的远程仓库
+            git remote add origin https://github.com/username/gitname.git
+            git remote add origin https://username@bitbucket.org/username/gitname.git
+</pre>
+<h3 id="toc_3.10.2" class="justcenter">查看</h3>
+<pre class="brush:bash">
+            git remote                      # 查看当前配置有哪些远程仓库
+            git remote show origin          # 查看名为 origin 的远程仓库的详细信息
+</pre>
+<h3 id="toc_3.10.3" class="justcenter">推送</h3>
+<pre class="brush:bash">
+            git push origin master          # 把本地的 master 分支推送到 origin 服务器上
+</pre>
+<h3 id="toc_3.10.4" class="justcenter">抓取</h3>
+<pre class="brush:bash">
+            git fetch origin                # 抓取所有 origin 有的,但本地仓库没有的信息
+            git pull                        # 从远程仓库抓取数据并合并(相当于 fetch + merge)
+</pre>
+<h3 id="toc_3.10.5" class="justcenter">移除/重命名</h3>
+<pre class="brush:bash">
+            git remote rm paul              # 移除名为 paul 的远程仓库
+            git remote rename pb paul       # 将远程仓库名从 pb 改为 paul 
+            git push origin :serverfix      # 删除远程仓库 origin 中名为 serverfix 的分支
+</pre>
+
+
+<h1 id="toc_4">一些技巧</h1>
+<h2 id="toc_4.1" class="justcenter">图形化工具</h2>
+<ul>
+<li>
+gitk用来查看历史提交很方便
+
+<li>
+git mergetool 用来进行可视化的合并
+
+</ul>
+
+<h2 id="toc_4.2" class="justcenter">Git仓库</h2>
+<ul>
+<li>
+<a href="https://bitbucket.org/">https://bitbucket.org/</a>
+
+</ul>
+
+<h2 id="toc_4.3" class="justcenter">忽略文件</h2>
+<pre class="brush:bash">
+        #在项目目录中添加一个名为 .gitignore (Windows下面需要在cmd下使用ren命令来重命名)的文件,加入:
+        # 这一行是注释
+        *.[oa]   # 忽略所有 .a 或 .o 结尾的文件
+        !lib.a   # 但 lib.a 除外
+        *~       # 忽略所有临时文件
+        *.pyc    # 忽略 pyc 文件
+        /TODO    # 仅仅忽略项目根目录下的 TODO 文件,不包括 subdir/TODO
+        build/   # 忽略 build/ 目录下的所有文件
+        ...
+</pre>
+
+    </body>
+</html>
+
