@@ -1,0 +1,526 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="https://www.yinxiang.com/media/img/favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../styles/shCore.css"/>
+        <link type="text/css" rel="stylesheet" href="../styles/shThemeDefault.css"/>
+        <script type="text/javascript" src="../scripts/shCore.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPhp.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+        <title>Vim以及插件定义命令</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    
+    <body>
+        
+<p>
+<a href="../index.html">回首页</a>
+<div class="toc">
+<ul>
+<li><a href="#toc_1"> 自定义命令</a>
+<li><a href="#toc_2"> 插件命令</a>
+<ul>
+<li><a href="#toc_2.1">1 界面类</a>
+<ul>
+<li><a href="#toc_2.1.1">1.1 TagHighlight</a>
+</ul>
+<li><a href="#toc_2.2">2 工程管理</a>
+<ul>
+<li><a href="#toc_2.2.1">2.1 vimprj</a>
+</ul>
+<li><a href="#toc_2.3">3 文件管理</a>
+<ul>
+<li><a href="#toc_2.3.1">3.1 NERDTree</a>
+<li><a href="#toc_2.3.2">3.2 bufkill</a>
+<li><a href="#toc_2.3.3">3.3 CtrlP</a>
+<li><a href="#toc_2.3.4">3.4 Mini Buffer Explorer</a>
+</ul>
+<li><a href="#toc_2.4">4 快速编辑</a>
+<ul>
+<li><a href="#toc_2.4.1">4.1 NERDCommenter</a>
+<li><a href="#toc_2.4.2">4.2 Ultisnips</a>
+<li><a href="#toc_2.4.3">4.3 YouCompleteMe</a>
+<li><a href="#toc_2.4.4">4.4 Clang Complete</a>
+<li><a href="#toc_2.4.5">4.5 CmdlineComplete</a>
+<li><a href="#toc_2.4.6">4.6 EasyMotion</a>
+</ul>
+<li><a href="#toc_2.5">5 编程辅助</a>
+<ul>
+<li><a href="#toc_2.5.1">5.1 a.vim</a>
+<li><a href="#toc_2.5.2">5.2 Tagbar</a>
+<li><a href="#toc_2.5.3">5.3 Tabular</a>
+<li><a href="#toc_2.5.4">5.4 Cscope</a>
+<li><a href="#toc_2.5.5">5.5 Tag</a>
+<li><a href="#toc_2.5.6">5.6 EasyGrep</a>
+<li><a href="#toc_2.5.7">5.7 Vim Bookmark</a>
+<li><a href="#toc_2.5.8">5.8 Visual-Mark</a>
+</ul>
+<li><a href="#toc_2.6">6 Python编程环境</a>
+<ul>
+<li><a href="#toc_2.6.1">6.1 Pydiction</a>
+<li><a href="#toc_2.6.2">6.2 PyFlakes</a>
+<li><a href="#toc_2.6.3">6.3 pythoncomplete</a>
+<li><a href="#toc_2.6.4">6.4 Python Mode</a>
+</ul>
+<li><a href="#toc_2.7">7 其他</a>
+<ul>
+<li><a href="#toc_2.7.1">7.1 Vimwiki</a>
+</ul>
+</ul>
+</ul>
+</div>
+</p>
+
+<h1 id="toc_1"> 自定义命令</h1>
+
+<pre c>
+    &lt;leader&gt;sw  交换前后两个单词(很先进的交换)
+
+    F8          取消匹配高亮
+    F10         make
+
+    &lt;M-u&gt;       更新Tags和Cscope
+    :M          make
+    :MI         make install
+    :CM         cmake .
+    :EM         e ./CMakeLists.txt
+    :R          run
+    :D          dbg
+    :CCH        创建C文件和H文件
+    :CH         创建当前C文件对应的H文件
+</pre>
+
+<h1 id="toc_2"> 插件命令</h1>
+
+<h2 id="toc_2.1">1 界面类</h2>
+
+<h3 id="toc_2.1.1">1.1 TagHighlight</h3>
+
+<pre c>
+    :UpdateTypesFile      开启高亮,如果没tag文件还会自己生成一个
+    :UpdateTypesFileOnly  开启高亮,不会自己生成tag文件,这个函数绑在F12上面
+</pre>
+
+<h2 id="toc_2.2">2 工程管理</h2>
+
+<h3 id="toc_2.2.1">2.1 vimprj</h3>
+
+<ul>
+<li>
+在工程目录下建立一个名为 .vimprj 的目录或文件
+<br />    当打开此目录下的文件时,vimprj会自动将此目录设置为当前的工作目录(不用在NerdTree里面使用cd命令了)
+<br />    上面那条特性会产生一点问题,已经关闭了,还是要用cd命令来确定工作目录
+
+</ul>
+
+<pre c>
+    :VimprjInfo   查看当前的工作目录
+</pre>
+
+<h2 id="toc_2.3">3 文件管理</h2>
+
+<h3 id="toc_2.3.1">3.1 NERDTree</h3>
+
+<pre c>
+    最常用:
+    
+    :Bookmark
+    o
+    go
+    C
+    m
+    cd
+
+    :NERDTreeFromBookmark    通过书签打开Nerdtree
+
+    
+    书签命令:
+    
+    :Bookmark                添加书签
+    :BookmarkToRoot          设置NerdTree的根目录为指定书签
+    :ClearBookmarks          清除指定书签
+    :ClearAllBookmarks       清除所有书签
+
+     
+    映射:
+    
+    o                        打开文件,并跳到文件窗口
+    go                       打开文件,但不跳到文件窗口
+    i                        split 打开文件,并跳到文件窗口
+    gi                       split 打开文件,但不跳到文件窗口
+    s                        vsp 打开文件,并跳到文件窗口
+    gs                       vsp 打开文件,但不跳到文件窗口
+    O                        递归打开选中结点下的所有目录
+    x                        合拢选中结点的父目录
+    X                        递归合拢选中结点下的所有目录
+              
+    D                        删除当前书签
+               
+    P                        跳到根结点
+    p                        跳到父结点
+    K                        跳到当前目录下同级的第一个结点
+    J                        跳到当前目录下同级的最后一个结点
+              
+    C                        将选中目录或选中文件的父目录设为根结点
+    u                        将当前根结点的父目录设为根目录，并变成合拢原根结点
+    U                        将当前根结点的父目录设为根目录，但保持展开原根结点
+    r                        递归刷新选中目录
+    R                        递归刷新根结点
+    m                        显示文件系统菜单
+    cd                       将Vim当前工作目录设为选中目录
+              
+    I                        切换是否显示隐藏文件
+    f                        切换是否使用文件过滤器
+    F                        切换是否显示文件
+    B                        切换是否显示书签
+</pre>
+
+<h3 id="toc_2.3.2">3.2 bufkill</h3>
+
+<pre c>
+    :BD                      关闭文件,但是窗口还保持住
+    &lt;leader&gt;bd               关闭文件,但是窗口还保持住
+</pre>
+
+<h3 id="toc_2.3.3">3.3 CtrlP</h3>
+
+<pre c>
+    &lt;C-P&gt;                    开始搜索文件
+    &lt;C-W&gt;&lt;C-U&gt; / &lt;C-W&gt;u      在历史记录里搜索文件
+    &lt;C-J&gt; / &lt;C-K&gt;            在搜索列表中移动光标
+</pre>
+
+<h3 id="toc_2.3.4">3.4 Mini Buffer Explorer</h3>
+
+<pre c>
+    &lt;leader&gt;h                向左切换窗口
+    &lt;leader&gt;l                向右切换窗口
+    :b&lt;n&gt;                    切换到第n号窗口
+</pre>
+
+<h2 id="toc_2.4">4 快速编辑</h2>
+
+<h3 id="toc_2.4.1">4.1 NERDCommenter</h3>
+
+<pre c>
+    [count]&lt;leader&gt;cc        注释
+    [count]&lt;leader&gt;cm        最简注释(比如/*...*/,不会每行都有一个,而是一块语句就只有一对)
+    [count]&lt;leader&gt;cs        用 "sexy" 风格注释所选的行
+    [count]&lt;leader&gt;cy        和 cc 一样,但注释前先复制所选的行
+    [count]&lt;leader&gt;cl        注释时左对齐
+    [count]&lt;leader&gt;cb        注释时两边对齐
+    &lt;leader&gt;cA               在行末添加注释符并进入插入模式
+
+    [count]&lt;leader&gt;c&lt;space&gt;  反转注释状态(根据第一行)
+    [count]&lt;leader&gt;ci        反转注释状态(每行单独处理)
+
+    [count]&lt;leader&gt;cu        取消所选行的注释.
+
+    &lt;leader&gt;ca               切换注释风格(如在/**/与//之间切换)
+</pre>
+
+
+<h3 id="toc_2.4.2">4.2 Ultisnips</h3>
+
+<pre c>
+    配置文件位于 ~/.vim/bundle/ultisnips/UltiSnips/
+    &lt;C-J&gt;                    弹出snippets
+    &lt;C-tab&gt;                  弹出候选的snippets
+    &lt;C-J&gt;                    在snippets中跳到下一个编辑点
+    &lt;C-K&gt;                    在snippets中跳到上一个编辑点
+    :UltiSnipsEdit           修改当前文件对应的模板文件
+</pre>
+
+<h3 id="toc_2.4.3">4.3 YouCompleteMe</h3>
+
+<pre c>
+    :YcmDiags                显示clang编译的警告和错误
+    &lt;leader&gt;jd               go to definition
+
+</pre>
+
+<h3 id="toc_2.4.4">4.4 Clang Complete</h3>
+
+<pre c>
+    &lt;C-X&gt;&lt;C-U&gt;               激活补全,新增加了一个快捷键 &lt;C-U&gt;
+    &lt;C-]&gt;                    跳到声明处
+    &lt;C-T&gt;                    跳回来
+                            
+    :copen                   显示分析错误
+</pre>
+
+<ul>
+<li>
+可以在根目录下面添加一个 .clang_complete 文件,记录头文件等信息,如:
+<br />    -DDEBUG
+<br />    -include ../config.h
+<br />    -I../common
+<br />    -I/usr/include/c++/4.5.3/
+<br />    -I/usr/include/c++/4.5.3/x86_64-slackware-linux/
+
+</ul>
+
+<ul>
+<li>
+对于gtk+-2.0:
+<br />    -I/usr/include/gtk-2.0
+<br />    -I/usr/lib/i386-linux-gnu/gtk-2.0/include
+<br />    -I/usr/include/atk-1.0
+<br />    -I/usr/include/cairo
+<br />    -I/usr/include/gdk-pixbuf-2.0
+<br />    -I/usr/include/pango-1.0
+<br />    -I/usr/include/gio-unix-2.0/
+<br />    -I/usr/include/glib-2.0
+<br />    -I/usr/lib/i386-linux-gnu/glib-2.0/include
+<br />    -I/usr/include/pixman-1
+<br />    -I/usr/include/freetype2
+<br />    -I/usr/include/libpng12 
+
+</ul>
+
+<ul>
+<li>
+附其他补全方式:
+<pre c>
+    整行补全                    CTRL-X CTRL-L
+    当前文件关键字补全            CTRL-X CTRL-N
+    字典补全                    CTRL-X CTRL-K
+    同义词字典补全               CTRL-X CTRL-T
+    头文件内关键字补全            CTRL-X CTRL-I
+    标签补全                    CTRL-X CTRL-]
+    补全文件名                  CTRL-X CTRL-F
+    补全宏定义                  CTRL-X CTRL-D
+    补全Vim命令                 CTRL-X CTRL-V
+    用户自定义补全               CTRL-X CTRL-U
+    拼写建议                    CTRL-X CTRL-S 
+</pre>
+
+</ul>
+
+
+<h3 id="toc_2.4.5">4.5 CmdlineComplete</h3>
+
+<pre c>
+    &lt;C-P&gt;  在使用/来搜索时,自动补全
+</pre>
+
+
+<h3 id="toc_2.4.6">4.6 EasyMotion</h3>
+
+<pre c>
+    &lt;leader&gt;&lt;leader&gt;fx    从光标位置处向后查找所有'x'
+    &lt;leader&gt;&lt;leader&gt;Fx    从光标位置处向前查找所有'x'
+</pre>
+<ul>
+<li>
+另外还支持 t T  w W b B e E ge gE j k n N
+<br />    现在把&lt;leader&gt;&lt;leader&gt; 换成了m
+
+</ul>
+
+
+<h2 id="toc_2.5">5 编程辅助</h2>
+
+<h3 id="toc_2.5.1">5.1 a.vim</h3>
+
+<pre c>
+    :A    切换c/h
+    :AS   在 split 中打开c和h
+    :AV   在 vsp 中打开c和h
+     
+    :IH   switches to file under cursor
+    :IHS  splits and switches
+    :IHV  vertical splits and switches
+</pre>
+
+<h3 id="toc_2.5.2">5.2 Tagbar</h3>
+
+<pre c>
+    p         源文件跳到tags处,但光标仍停留在Tagbar窗口
+    &lt;space&gt;   在命令行显示当前tag的原型
+</pre>
+
+
+<h3 id="toc_2.5.3">5.3 Tabular</h3>
+
+<pre c>
+    :Tab/=    将代码按=作为标准对齐
+    :Tab/:    将代码按:作为标准对齐
+    :Tab/:\zs 按:作为标准对齐,但是:本身不动
+</pre>
+
+<h3 id="toc_2.5.4">5.4 Cscope</h3>
+
+<ul>
+<li>
+比较常用的 g c
+<pre c>
+    s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
+    g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
+    d: 查找本函数调用的函数
+    c: 查找调用本函数的函数
+    t: 查找指定的字符串
+    e: 查找egrep模式，相当于egrep功能，但查找速度快多了
+    f: 查找并打开文件，类似vim的find功能
+    i: 查找包含本文件的文件
+</pre>
+
+</ul>
+
+<ul>
+<li>
+可以用快捷键查找当前光标处的单词,如:
+<pre c>
+    nmap &lt;C-C&gt;c
+    nmap &lt;C-C&gt;&lt;C-C&gt;
+    nmap &lt;C-C&gt;s
+    nmap &lt;C-C&gt;&lt;C-S&gt;
+</pre>
+
+</ul>
+
+<ul>
+<li>
+也可以用命令来查找,如:
+<pre c>
+    :cs find c do_cscope 在项目中查找调用do_cscope()函数的函数
+    :cs find s do_cscope 在项目中查找do_cscope符号出现的地方
+</pre>
+
+</ul>
+
+<h3 id="toc_2.5.5">5.5 Tag</h3>
+
+<pre c>
+    Ctrl+]        跳转到当前光标下的标签
+    Ctrl+T        跳转到标签栈中较早的标签
+</pre>
+
+<h3 id="toc_2.5.6">5.6 EasyGrep</h3>
+
+<ul>
+<li>
+搜索模式:
+<pre c>
+        All                                    所有文件
+        Buffers                                打开的文件
+        TrackExt                               智能判断文件类型
+        User                                   用户自定义的正则表达式
+</pre>
+
+</ul>
+
+<ul>
+<li>
+快捷键:
+<pre c>
+        &lt;leader&gt;vv / &lt;leader&gt;vV                查找光标处的单词 / 全词匹配
+        &lt;leader&gt;va / &lt;leader&gt;vA                like vv, but add to existing list / 全词匹配
+        &lt;leader&gt;vr / &lt;leader&gt;vR                替换光标处的单词 / 全词匹配
+
+        &lt;leader&gt;vo                             显示查找选项,这个功能很方便,注意要通过 q 来关闭
+        &lt;leader&gt;vy&lt;option&gt;                     快捷更改选项,option是选项的第一个字母
+</pre>
+
+</ul>
+
+<ul>
+<li>
+命令:
+<pre c>
+        :Grep / :Grep! [arg]                   &lt;leader&gt;vv / &lt;leader&gt;vV
+        :GrepAdd / :GrepAdd! [arg]             &lt;leader&gt;va / &lt;leader&gt;vA
+        :Replace [target] [replacement]        替换
+        :ReplaceUndo [target] [replacement]    恢复上一次替换(不一定靠谱)
+</pre>
+
+</ul>
+
+<h3 id="toc_2.5.7">5.7 Vim Bookmark</h3>
+
+<pre c>
+    mm 用于设定或者删除一个书签，或者使用命令 VbookmarkToggle
+    mn 用于跳转到下一个书签，或者使用命令 VbookmarkNext
+    mp 用于跳转到前一个书签，或者使用命令 VbookmarkPrevious
+    ma 用于删除所有书签，或者使用命令 VbookmarkClearAll
+</pre>
+
+<h3 id="toc_2.5.8">5.8 Visual-Mark</h3>
+
+<pre c>
+    &lt;C-F2&gt;        设置/取消书签
+    &lt;F2&gt; / &lt;M-F2&gt; 切换书签
+</pre>
+
+
+<h2 id="toc_2.6">6 Python编程环境</h2>
+
+<h3 id="toc_2.6.1">6.1 Pydiction</h3>
+
+<pre c>
+    开启补全          &lt;C-X&gt;&lt;C-K&gt;
+    默认是Tab键,但是不好用,直接用字典补全
+</pre>
+
+<h3 id="toc_2.6.2">6.2 PyFlakes</h3>
+
+<pre c>
+    :cc               检查错误
+</pre>
+
+
+<h3 id="toc_2.6.3">6.3 pythoncomplete</h3>
+
+<pre c>
+    开启补全          &lt;C-X&gt;&lt;X-O&gt;
+</pre>
+
+
+<h3 id="toc_2.6.4">6.4 Python Mode</h3>
+
+<ul>
+<li>
+Rope补全好像有问题,先不用了
+
+</ul>
+
+<pre c>
+    K                 Show python docs for current word under cursor
+    &lt;leader&gt;r         Run current buffer
+    &lt;leader&gt;b         Set breakpoints
+
+    [[                Jump to previous class or function (normal, visual, operator modes)
+    ]]                Jump to next class or function  (normal, visual, operator modes)
+    [M                Jump to previous class or method (normal, visual, operator modes)
+    ]M                Jump to next class or method (normal, visual, operator modes)
+    aC                Select a class. Ex: vaC, daC, yaC, caC (normal, operator modes)
+    iC                Select inner class. Ex: viC, diC, yiC, ciC (normal, operator modes)
+    aM                Select a function or method. Ex: vaM, daM, yaM, caM (normal, operator modes)
+    iM                Select inner function or method. Ex: viM, diM, yiM, ciM (normal, operator modes)
+     
+    :Pydoc &lt;args&gt;     Show python documentation
+    :PyLintToggle     Enable, disable pylint
+    :PyLint           Check current buffer
+    :PyLintAuto       Automatically fix PEP8 errors in the current buffer
+    :Pyrun            Run current buffer
+</pre>
+
+
+<h2 id="toc_2.7">7 其他</h2>
+
+<h3 id="toc_2.7.1">7.1 Vimwiki</h3>
+
+<ul>
+<li>
+<a href="Vimwiki使用.html">Vimwiki使用</a>
+
+</ul>
+
+    </body>
+</html>
+

@@ -1,0 +1,5 @@
+    * [[http://lcx.cc/?i=386 |3389远程连接问题的一个解决办法]]
+    * [[http://lcx.cc/?i=804 |Wscript.Shell 恢复 Wscript.Shell 卸载]]
+    * [[http://lcx.cc/?i=127 |【电脑技巧】畸形网址(URL)，会说谎的URL地址]]
+    * [[http://lcx.cc/?i=10 |深入剖析黑客窃取网上银行的基本方法]]
+    * [[http://lcx.cc/?i=458 |联合国网站一个小小的Bug]]

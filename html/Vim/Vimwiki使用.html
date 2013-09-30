@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="shortcut icon" href="https://www.yinxiang.com/media/img/favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../styles/shCore.css"/>
+        <link type="text/css" rel="stylesheet" href="../styles/shThemeDefault.css"/>
+        <script type="text/javascript" src="../scripts/shCore.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushJScript.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushBash.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPython.js"></script>
+        <script type="text/javascript" src="../scripts/shBrushPhp.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+        <title>VimWiki Usage</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    
+    <body>
+        
+<p>
+<a href="../index.html">回首页</a>
+<div class="toc">
+<ul>
+<li><a href="#toc_1"> Mappings</a>
+<ul>
+<li><a href="#toc_1.1">1 Global mappings</a>
+<li><a href="#toc_1.2">2 Local mappings</a>
+<ul>
+<li><a href="#toc_1.2.1">2.1 NORMAL MODE</a>
+<li><a href="#toc_1.2.2">2.2 INSERT MODE</a>
+</ul>
+<li><a href="#toc_1.3">3 Text objects</a>
+</ul>
+<li><a href="#toc_2"> Commands</a>
+<li><a href="#toc_3"> Wiki syntax</a>
+<li><a href="#toc_4"> Placeholders</a>
+</ul>
+</div>
+<img src="" />
+</p>
+<h1 id="toc_1"> Mappings</h1>
+
+<h2 id="toc_1.1">1 Global mappings</h2>
+
+<pre c>
+[count]&lt;Leader&gt;ww            Open index file of the [count]'s wiki
+[count]&lt;Leader&gt;wi            Open diary index file of the [count]'s wiki.
+[count]&lt;Leader&gt;w&lt;Leader&gt;w    Open diary wiki-file for today of the [count]'s wiki.
+</pre>
+
+<h2 id="toc_1.2">2 Local mappings</h2>
+
+<h3 id="toc_1.2.1">2.1 NORMAL MODE</h3>
+
+<pre c>
+&lt;Leader&gt;wh                   Convert current wiki page to HTML.
+&lt;Leader&gt;whh                  Convert current wiki page to HTML and open it in webbrowser.
+
+&lt;Leader&gt;w&lt;Leader&gt;i           Update diary section (delete old, insert new) Only works from the diary index.
+
+&lt;CR&gt;                         Follow/create wiki link (create target wiki page if needed).
+&lt;S-CR&gt;                       Split and follow (create target wiki page if needed)
+&lt;C-CR&gt;                       Vertical split and follow (create target wiki page if needed)
+&lt;Backspace&gt;                  Go back to previous wiki page.
+&lt;Tab&gt;                        Find next link on the current page.
+&lt;S-Tab&gt;                      Find previous link on the current page.
+
+&lt;Leader&gt;wd                   Delete wiki page you are in.
+&lt;Leader&gt;wr                   Rename wiki page you are in.
+
+=                            Add header level. Create if needed
+-                            Remove header level.
++                            Create and/or decorate links
+glm                          Increase the indent of a single-line list item.
+gll                          Decrease the indent of a single-line list item.
+gl* or gl8                   Switch or insert a "*" symbol.  Only available in supported syntaxes.
+gl# or gl3                   Switch or insert a "#" symbol.  Only available in supported syntaxes.
+gl-                          Switch or insert a "-" symbol.  Only available in supported syntaxes.
+gl1                          Switch or insert a "1." symbol.  Only available in supported syntaxes.
+
+gqq                          Format table. If you made some changes to a table
+ or                          without swapping insert/normal modes this command
+gww                          will reformat it.
+&lt;A-Left&gt;                     Move current table column to the left.
+&lt;A-Right&gt;                    Move current table column to the right.
+&lt;C-Up&gt;                       Open the previous day's diary link if available.
+&lt;C-Down&gt;                     Open the next day's diary link if available.
+&lt;2-LeftMouse&gt;                Follow wiki link (create target wiki page if needed).
+&lt;S-2-LeftMouse&gt;              Split and follow wiki link (create target wiki page if needed).
+&lt;C-2-LeftMouse&gt;              Vertical split and follow wiki link (create target wiki page if needed).
+&lt;RightMouse&gt;&lt;LeftMouse&gt;      Go back to previous wiki page.
+
+zM                           Folding
+zr                           Unfolding
+</pre>
+
+<h3 id="toc_1.2.2">2.2 INSERT MODE</h3>
+
+<pre c>
+&lt;CR&gt;                         Go to the table cell beneath the current one, create a new row if on the last one.
+&lt;Tab&gt;                        Go to the next table cell, create a new row if on the last cell.
+</pre>
+
+<h2 id="toc_1.3">3 Text objects</h2>
+
+<pre c>
+ah                           A section segment (the area between two consecutive
+                             headings) including trailing empty lines.
+ih                           A section segment without trailing empty lines.
+
+You can 'vah' to select a section segment with its contents or 'dah' to delete
+it or 'yah' to yank it or 'cah' to change it.
+
+a\                           A cell in a table.
+i\                           An inner cell in a table.
+ac                           A column in a table.
+ic                           An inner column in a table.
+</pre>
+
+<h1 id="toc_2"> Commands</h1>
+
+<pre c>
+*:VimwikiAll2HTML* Convert all wiki pages to HTML.
+*:VimwikiToggleListItem* Toggle list item on/off (checked/unchecked)
+
+*:VimwikiSearch* /pattern/
+*:VWS* /pattern/
+    Search for /pattern/ in all files of current wiki.
+    To display all matches use |:lopen| command.
+    To display next match use |:lnext| command.
+    To display previous match use |:lprevious| command.
+
+*:VimwikiBacklinks*
+*:VWB*
+    Search for wikilinks to the [[current wiki page]]
+    in all files of current wiki.
+    To display all matches use |:lopen| command.
+    To display next match use |:lnext| command.
+    To display previous match use |:lprevious| command.
+
+*:VimwikiTable*
+    Create a table with 5 cols and 2 rows.
+
+    :VimwikiTable cols rows
+    Create a table with the given cols and rows
+
+    :VimwikiTable cols
+    Create a table with the given cols and 2 rows
+</pre>
+
+<h1 id="toc_3"> Wiki syntax</h1>
+
+<pre c>
+* bold *
+_italic _
+~ ~ strikeout text ~ ~
+' code (no syntax) text '
+super^script^
+sub,,script,,
+</pre>
+ 
+<pre class="brush: python">
+for i in range(1, 5):
+    print(i)
+</pre>
+
+<pre class="brush: c">
+#include "helloworld.h"
+int helloworld()
+{
+   printf("hello world");
+}
+</pre>
+
+<pre c>
+Unordered lists:
+  * Bulleted list item
+or
+  - Bulleted list item
+
+Ordered lists:
+  # Numbered list item
+
+
+Text line started with %% is a comment.
+E.g.:
+
+
+4 or more dashes at the start of the line is a 'horizontal line' 
+-------
+
+
+[ [ This is a link ] ]
+[ [ This is a link source | Description of the link ] ]
+[ [ /home/somebody/ | Home Directory ] ]
+[ [ wiki#:This is a link ] ]
+[ [ wiki#:This is a link source | Description of the link ] ]
+[ [ diary:2012-03-05 ] ]
+[ [ ../../diary/2012-03-05 ] ]
+[ [ local:../assets/data.csv|data (CSV) ] ]
+[ [ file: /// home/ somebody/ a/ b/ c/ music.mp3 ] ]
+{ { local:../../images/vimwiki_logo.png } }
+{ { http: // vimwiki.googlecode.com/hg/images/vimwiki_logo.png } }
+{ { http: // vimwiki.googlecode.com/hg/images/vimwiki_logo.png | Vimwiki } }
+{ { http: // .../vimwiki_logo.png | cool stuff | style="width:150px; height: 120px;" } }
+{ { http: // .../vimwiki_logo.png || class="center flow blabla" } }
+[ [ http: // someaddr.com/bigpicture.jpg | { { http: // someaddr.com/thumbnail.jpg } } ] ]
+
+</pre>
+
+<h1 id="toc_4"> Placeholders</h1>
+
+<pre c>
+% toc Table of Contents
+You can add 'table of contents' to your HTML page generated from wiki one.
+
+When you htmlize your wiki page, the default title is the filename of the page
+
+% nohtml
+If you do not want a wiki page to be converted to HTML
+
+% template name
+To apply a concrete HTML template to a wiki page
+</pre>
+
+    </body>
+</html>
+
